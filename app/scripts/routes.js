@@ -27,7 +27,7 @@
  *   }
  *
  */
-angular.module('ticketHelperApp')
+angular.module('ticketApp')
 
     /**
      * Adds a special `whenAuthenticated` method onto $routeProvider. This special method,
@@ -81,7 +81,7 @@ angular.module('ticketHelperApp')
      * for changes in auth status which might require us to navigate away from a path
      * that we can no longer view.
      */
-    .run(['$rootScope', '$location', 'simpleLogin', 'SECURED_ROUTES', 'loginRedirectPath',
+    .run(['$rootScope', '$location', 'simpleLogin', 'SECURED_ROUTES', 'LOGIN_REDIRECT_PATH',
         function($rootScope, $location, simpleLogin, SECURED_ROUTES, loginRedirectPath) {
             // watch for login status changes and redirect if appropriate
             simpleLogin.watch(check, $rootScope);

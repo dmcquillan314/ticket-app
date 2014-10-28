@@ -7,7 +7,7 @@
  * Manages authentication to any active providers.
  */
 angular.module('ticketApp')
-    .controller('LoginCtrl', function ($scope, simpleLogin, $location) {
+    .controller('LoginCtrl', [ '$scope', 'simpleLogin', '$location', function ($scope, simpleLogin, $location) {
         $scope.oauthlogin = function(provider) {
             login(provider, {
                 rememberMe: true
@@ -52,4 +52,4 @@ angular.module('ticketApp')
             );
         }
 
-    });
+    }]);

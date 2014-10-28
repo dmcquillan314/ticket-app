@@ -7,7 +7,7 @@
  * Provides rudimentary account management functions.
  */
 angular.module('ticketApp')
-    .controller('AccountCtrl', function ($scope, user, simpleLogin, fbutil, $timeout) {
+    .controller('AccountCtrl', [ '$scope', 'user', 'simpleLogin', 'firebaseUtil', '$timeout', function ($scope, user, simpleLogin, firebaseUtil, $timeout) {
         $scope.user = user;
         $scope.logout = simpleLogin.logout;
         $scope.messages = [];
@@ -59,6 +59,6 @@ angular.module('ticketApp')
             if( $scope.profile ) {
                 $scope.profile.$destroy();
             }
-            fbutil.syncObject('users/'+user.uid).$bindTo($scope, 'profile');
+            firebaseUtil.syncObject('users/'+user.uid).$bindTo($scope, 'profile');
         }
-    });
+    }]);
