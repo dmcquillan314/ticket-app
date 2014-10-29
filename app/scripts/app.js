@@ -16,18 +16,8 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
+        'duScroll',
         'firebase.config',
         'firebase.utils',
         'firebase.auth.utils'
-    ])
-    .config(function ($routeProvider) {
-        $routeProvider
-            .when('/about', {
-                templateUrl: 'views/about.html',
-                controller: 'AboutCtrl'
-            })
-            .otherwise({
-                redirectTo: '/'
-            });
-
-    });
+    ]);

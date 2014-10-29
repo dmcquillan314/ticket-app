@@ -21,16 +21,6 @@
 
     <!-- Add your site or application content here -->
     <div class="container">
-        <div class="header">
-            <ul class="nav nav-pills pull-right">
-                <li class="active"><a ng-href="#">Home</a></li>
-                <li>
-                    <a ng-hide-auth="" href="#/login">log in</a>
-                    <a ng-show-auth="" href="#/account">account</a>
-                </li>
-            </ul>
-        </div>
-
         <div ng-view=""></div>
     </div>
 
@@ -71,12 +61,12 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/lib/angular-scroll.js"></script>
+    <script src="scripts/lib/overthrow.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/angularfire/firebase.auth.utils.js"></script>
     <script src="scripts/angularfire/firebase.config.js"></script>
     <script src="scripts/angularfire/firebase.utils.js"></script>
-    <script src="scripts/controllers/account.js"></script>
-    <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/directives/ngShowHideAuth.js"></script>
     <script src="scripts/routes.js"></script>

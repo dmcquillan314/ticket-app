@@ -61,15 +61,9 @@ angular.module('ticketApp')
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
-
-            .when('/login', {
-                templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
-            })
-
-            .whenAuthenticated('/account', {
-                templateUrl: 'views/account.html',
-                controller: 'AccountCtrl'
+            .whenAuthenticated('/ticket', {
+                templateUrl: 'views/ticket.html',
+                controller: 'TicketCtrl'
             })
             .otherwise({redirectTo: '/'});
     }])
