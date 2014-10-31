@@ -20,5 +20,6 @@ angular
         'firebase.config',
         'firebase.utils',
         'firebase.auth.utils',
-        'image'
+        'image',
+        'signature'
     ]);

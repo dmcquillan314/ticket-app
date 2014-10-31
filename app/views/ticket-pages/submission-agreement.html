@@ -1,0 +1,16 @@
+<form role="form" name="submission-agreement" ng-submit="submitAgreement(agreement)">
+
+    <h2>All set?</h2>
+
+    <p>We are generating your statement and it will be mailed in a matter of moments. Please take the time to review your statement. If you agree with the contents of the statement and would like us to send it to the city, please sign and send.</p>
+
+    <div class="signature-pad" model="agreement.signature"></div>
+
+    <p>
+        {{ error.message }}
+    </p>
+
+    <p>
+        <button type="submit" class="btn btn-primary">I agree</button>
+    </p>
+</form>
