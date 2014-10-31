@@ -1,18 +1,6 @@
-<form role="form">
-    <label class="form-group">
-        <p>email</p>
-        <input required name="email" type="email" ng-model="email" class="form-control" />
-    </label>
-    <label class="form-group">
-        <p>password</p>
-        <input required name="pass" type="password" ng-model="pass" class="form-control" />
-    </label>
-    <label class="form-group">
-        <p>confirm pass</p>
-        <input required name="confirm" type="password" ng-model="confirm" class="form-control" />
-    </label>
-
-    <p>
-        <button  class="btn btn-primary" ng-click="createAccount(email, pass, confirm)">Create Account</button>
-    </p>
-</form>
+<div class="ticket-information-form">
+    <ng-include src="'views/ticket-pages/ticket-information.html'"></ng-include>
+</div>
+<div class="user-information-form">
+    <ng-include src="'views/ticket-pages/user-information.html'"></ng-include>
+</div>

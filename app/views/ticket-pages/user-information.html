@@ -1,0 +1,51 @@
+<form role="form" name="user-information" ng-submit="isAnonymous() ? submitUserInformation(profile) : createUser(profile)">
+    <label class="form-group" ng-if="isAnonymous()">
+        <p>email</p>
+        <input required name="email" type="email" ng-model="profile.email" class="form-control" />
+    </label>
+    <label class="form-group" ng-if="isAnonymous()">
+        <p>password</p>
+        <input required name="pass" type="password" ng-model="profile.pass" class="form-control" />
+    </label>
+    <label class="form-group" ng-if="isAnonymous()">
+        <p>confirm pass</p>
+        <input required name="confirm" type="password" ng-model="profile.confirm" class="form-control" />
+    </label>
+
+    <label class="form-group">
+        <p>First Name</p>
+        <input required name="firstName" type="text" ng-model="profile.firstName" class="form-control" />
+    </label>
+    <label class="form-group">
+        <p>Last Name</p>
+        <input required name="lastName" type="text" ng-model="profile.lastName" class="form-control" />
+    </label>
+    <label class="form-group">
+        <p>Address</p>
+        <input required name="address" type="text" ng-model="profile.address" class="form-control" />
+    </label>
+    <label class="form-group">
+        <p>City</p>
+        <input required name="city" type="text" ng-model="profile.city" class="form-control" />
+    </label>
+    <label class="form-group">
+        <p>State</p>
+        <input required name="state" type="text" ng-model="profile.state" class="form-control" />
+    </label>
+    <label class="form-group">
+        <p>Zip</p>
+        <input required name="zip" type="text" ng-model="profile.zip" class="form-control" />
+    </label>
+    <label class="form-group">
+        <p>Phone</p>
+        <input required name="phone" type="text" ng-model="profile.phone" class="form-control" />
+    </label>
+
+    <p>
+        {{ error.message }}
+    </p>
+
+    <p>
+        <button  class="btn btn-primary" type="submit ">Submit</button>
+    </p>
+</form>

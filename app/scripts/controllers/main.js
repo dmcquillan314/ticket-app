@@ -25,8 +25,6 @@ angular.module('ticketApp')
             });
         };
 
-
-
         function login(provider, opts) {
             $scope.err = null;
             simpleLogin.login(provider, opts).then(

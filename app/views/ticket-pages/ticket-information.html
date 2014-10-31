@@ -1,0 +1,19 @@
+<form role="form" name="user-information" ng-submit="submitTicketInformation(ticket)">
+    <label class="form-group">
+        <p>Ticket number</p>
+        <input required name="ticketNumber" type="text" ng-model="ticket.number" class="form-control" />
+    </label>
+    <label class="form-group">
+        <p>Ticket photo</p>
+        <input required name="photo" type="file" image-upload="ticket.image" class="form-control" />
+        <img style="max-height: 50px" ng-src="{{ ticket.image.data }}" alt="{{ ticket.number }}" />
+    </label>
+
+    <p>
+        {{ error.message }}
+    </p>
+
+    <p>
+        <button type="submit" class="btn btn-primary">Submit Ticket Information</button>
+    </p>
+</form>

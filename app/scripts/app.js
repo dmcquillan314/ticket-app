@@ -19,5 +19,6 @@ angular
         'duScroll',
         'firebase.config',
         'firebase.utils',
-        'firebase.auth.utils'
+        'firebase.auth.utils',
+        'image'
     ]);

@@ -39,7 +39,7 @@ angular.module('firebase.auth.utils', [ 'firebase', 'firebase.utils', 'firebase.
             auth.$logout();
         },
 
-        createAccount: function(email, pass, name) {
+        createAccount: function(email, pass) {
             return auth.$createUser(email, pass)
                 .then(function() {
                     return fns.login('password', {
@@ -48,7 +48,7 @@ angular.module('firebase.auth.utils', [ 'firebase', 'firebase.utils', 'firebase.
                     });
                 })
                 .then(function(user) {
-                    return createProfile(user.uid, email, name)
+                    return createProfile(user.uid, email)
                         .then(function() {
                             return user;
                         });
@@ -95,11 +95,11 @@ angular.module('firebase.auth.utils', [ 'firebase', 'firebase.utils', 'firebase.
 }])
 
 .factory('createProfile', [ '$q', '$timeout', 'firebaseUtil', function($q, $timeout, firebaseUtil) {
-    return function(id, email, name) {
+    return function(id, email) {
         var ref = firebaseUtil.ref('users', id),
             deferred = $q.defer();
 
-        ref.set({ email: email, name: name || firstPartOfEmail(email) }, function(err) {
+        ref.set({ email: email }, function(err) {
             $timeout(function() {
                 if( err ) {
                     deferred.reject(err);
@@ -108,16 +108,6 @@ angular.module('firebase.auth.utils', [ 'firebase', 'firebase.utils', 'firebase.
                 }
             });
         });
-
-        function firstPartOfEmail(email) {
-            return ucfirst(email.substr(0, email.indexOf('@')) || '' );
-        }
-
-        function ucfirst(str) {
-            str += '';
-            var f = str.charAt(0).toUpperCase();
-            return f + str.substr(1);
-        }
 
         return deferred.promise;
     };
