@@ -8,10 +8,36 @@ angular.module('ticketApp')
     };
 
     $scope.profile = {};
+    $scope.agreement = {};
 
     if( ! $scope.isAnonymous() ) {
         firebaseUtil.syncObject('users/' + user.uid).$bindTo($scope, 'profile');
     }
+
+    var migrateInfo = function(oldUserId, newUserId) {
+        var ref = firebaseUtil.ref('tickets', oldUserId),
+            deferred = $q.defer();
+
+        console.log(newUserId);
+
+        ref.once('value', function(snapshot) {
+            var valueToMigrate = snapshot.val();
+
+            ref.remove();
+            ref = firebaseUtil.ref('tickets', newUserId);
+            ref.set(valueToMigrate, function(err) {
+                if(err) {
+                    console.log('error migrating user', err);
+                } else {
+                    deferred.resolve();
+                }
+            });
+        }, function(error) {
+            console.log(error);
+        });
+
+        return deferred.promise;
+    };
 
     var submitUserInformation = function(profile, id) {
         var ref = firebaseUtil.ref('users', id),
@@ -31,7 +57,7 @@ angular.module('ticketApp')
             if( err ) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(ref);
+                deferred.resolve();
                 firebaseUtil.syncObject('users/' + user.uid).$bindTo($scope, 'profile');
             }
         });
@@ -39,18 +65,14 @@ angular.module('ticketApp')
     };
 
     $scope.submitTicketInformation = function(ticket) {
-        var ref = firebaseUtil.ref('tickets', user.id);
+        var ref = firebaseUtil.ref('tickets', user.uid);
 
         ref.set(ticket, function(error) {
             if( error ) {
                 $scope.error = 'Error uploading ticket information.';
             } else {
-                $scope.$apply(function() {
-                    firebaseUtil.syncObject('tickets/' + user.id).$bindTo($scope, 'resolvedTicket');
-                });
             }
         });
-        void(ticket);
     };
 
     $scope.createUser = function(profile) {
@@ -63,10 +85,16 @@ angular.module('ticketApp')
         }
         else {
             simpleLogin.createAccount(profile.email, profile.pass)
-                .then(function(response) {
+                .then(function() {
                     authRequired().then(function(newUser) {
+
+                        var oldUserId = user.uid;
                         user = newUser;
-                        submitUserInformation(profile, response.uid);
+
+                        $q.all([
+                            migrateInfo(oldUserId, newUser.uid),
+                            submitUserInformation(profile, newUser.uid)
+                        ]);
                     });
                 }, function(error) {
                     $scope.error = error;
@@ -76,5 +104,16 @@ angular.module('ticketApp')
 
     $scope.submitUserInformation = function(profile) {
         submitUserInformation(profile, user.uid);
+    };
+
+    $scope.submitAgreement = function(agreement) {
+        var ref = firebaseUtil.ref('tickets', user.uid);
+
+        ref.child('agreeement').set(agreement, function(error) {
+            if( error ) {
+                $scope.error = 'Error uploading ticket information.';
+            } else {
+            }
+        });
     };
 }]);

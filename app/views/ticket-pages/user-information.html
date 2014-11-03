@@ -1,4 +1,4 @@
-<form role="form" name="user-information" ng-submit="isAnonymous() ? submitUserInformation(profile) : createUser(profile)">
+<form role="form" name="user-information" ng-submit="isAnonymous() ? createUser(profile) : submitUserInformation(profile)">
     <label class="form-group" ng-if="isAnonymous()">
         <p>email</p>
         <input required name="email" type="email" ng-model="profile.email" class="form-control" />
