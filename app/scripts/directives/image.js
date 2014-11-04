@@ -19,7 +19,9 @@ angular.module('image')
             }
 
             if(imageModel) {
-                imageModel.assign(scope, imageObject);
+                imageObject = angular.extend( imageModel(scope), imageObject);
+
+//                imageModel.assign(scope, imageObject);
 
                 fileReader.onload = function (fileReaderEvent) {
                     scope.$apply(function () {

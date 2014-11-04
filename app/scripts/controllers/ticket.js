@@ -1,18 +1,39 @@
 angular.module('ticketApp')
 
-.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'simpleLogin', 'firebaseUtil', 'authRequired', function($q, $scope, $location, user, simpleLogin, firebaseUtil, authRequired) {
+.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'ticket', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired', function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil, authRequired) {
     'use strict';
 
     $scope.isAnonymous = function() {
         return user.provider === 'anonymous';
     };
 
-    $scope.profile = {};
-    $scope.agreement = {};
-
-    if( ! $scope.isAnonymous() ) {
-        firebaseUtil.syncObject('users/' + user.uid).$bindTo($scope, 'profile');
+    if(ticket === null) {
+        ticket = {};
     }
+    if( ! ticket.image ) {
+        ticket.image = {};
+    }
+    if( ! ticket.additional ) {
+        ticket.additional = {};
+    }
+    if( ! ticket.additional.images ) {
+        ticket.additional.images = [
+            { id: 1 },
+            { id: 1 },
+            { id: 1 }
+        ];
+    }
+    if( ! ticket.agreement ) {
+        ticket.agreement = {};
+    }
+    if(profile === null) {
+        profile = {};
+    }
+
+    $scope.profile = profile;
+    $scope.ticket = ticket;
+    $scope.agreement = ticket.agreement;
+    $scope.additional = ticket.additional;
 
     var migrateInfo = function(oldUserId, newUserId) {
         var ref = firebaseUtil.ref('tickets', oldUserId),
@@ -64,10 +85,13 @@ angular.module('ticketApp')
 
     };
 
-    $scope.submitTicketInformation = function(ticket) {
+    $scope.submitTicket = function() {
         var ref = firebaseUtil.ref('tickets', user.uid);
 
-        ref.set(ticket, function(error) {
+        // copying will remove angular properties
+        var ticketCopy = angular.copy(ticket);
+
+        ref.set(ticketCopy, function(error) {
             if( error ) {
                 $scope.error = 'Error uploading ticket information.';
             } else {
@@ -105,15 +129,15 @@ angular.module('ticketApp')
     $scope.submitUserInformation = function(profile) {
         submitUserInformation(profile, user.uid);
     };
-
-    $scope.submitAgreement = function(agreement) {
-        var ref = firebaseUtil.ref('tickets', user.uid);
-
-        ref.child('agreeement').set(agreement, function(error) {
-            if( error ) {
-                $scope.error = 'Error uploading ticket information.';
-            } else {
-            }
-        });
-    };
+//
+//    $scope.submitAgreement = function(agreement) {
+//        var ref = firebaseUtil.ref('tickets', user.uid);
+//
+//        ref.child('agreeement').set(agreement, function(error) {
+//            if( error ) {
+//                $scope.error = 'Error uploading ticket information.';
+//            } else {
+//            }
+//        });
+//    };
 }]);

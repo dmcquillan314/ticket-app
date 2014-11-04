@@ -1,0 +1,23 @@
+<form role="form" name="user-information" ng-submit="submitTicket()">
+
+    <h2>Additional Information</h2>
+
+    <p>Photos</p>
+    <label class="form-group" ng-repeat="image in additional.images">
+        <input required name="photo" type="file" image-upload="image" class="form-control" />
+        <img style="max-height: 50px" ng-src="{{ image.data }}" alt="{{ ticket.number }}" />
+    </label>
+
+    <label class="form-group">
+        <p>Comments</p>
+        <textarea name="comments" ng-model="additional.comments"></textarea>
+    </label>
+
+    <p>
+        {{ error.message }}
+    </p>
+
+    <p>
+        <button type="submit" class="btn btn-primary">Submit Ticket Information</button>
+    </p>
+</form>
