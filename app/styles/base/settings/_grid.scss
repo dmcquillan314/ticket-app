@@ -1,0 +1,61 @@
+//@import "susy";
+
+// Responsive grid system based on https://github.com/ericam/susy.
+// NOTE: Avoid changing or overriding settings in this file.
+// ---------------------------------------------------------------
+
+$container-style: static;   // For now, we want a static grid
+$total-columns  : 12;       // 
+$column-width   : 7.233332%;     // each column is max 40px wide
+$gutter-width   : 1.2%;     // 
+$grid-padding   : 0;
+
+//@include border-box-sizing;
+
+@mixin custom-width-no-gutter( $columns ) {
+    @include custom-width( $columns, $gutter_width );
+}
+
+@mixin custom-width( $columns, $gutterWidth ) {
+    width: $columns * ( $column_width + $gutter_width ) - $gutterWidth;
+}
+
+@mixin hide-content {
+    position: absolute;
+    left: -9999px;
+    // visibility: hidden;
+}
+
+@mixin leader ($lines) {
+	margin-top: $lines + rem;
+}
+
+@mixin trailer ($lines) {
+	margin-bottom: $lines + rem;
+}
+
+@mixin omega ($from-direction: "right") {
+	float:right;
+	margin-right:0;
+	padding-right:0;
+}
+
+@mixin span-columns-custom ( $columns, $all-columns, $omega:"") {
+
+	float:left;
+	margin-right: $gutter-width;
+	width: ((100% - ($gutter-width * ($all-columns / $columns))) / $all-columns) * $columns;
+	display:inline;
+
+	@if $omega == "omega" {
+		float:right;
+		margin-right:0;
+	}
+}
+
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+

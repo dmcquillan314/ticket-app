@@ -1,0 +1,45 @@
+.message-box {
+
+    @include border-radius($standard-border-radius);
+    @include inline-block;
+    width: 100%;
+    padding: $global-padding;
+
+    .message-box_header {
+        padding-bottom: $global-padding / 2;
+        @extend %proximaNova-soft-semibold;
+    }
+
+    &.message-box--with-icon {
+
+        .message-box_icon {
+            @include elegant-icon-font;
+            position: absolute;
+            font-size: 1.3rem;
+            width: 1.5rem;
+        }
+
+        .message-box_message {
+            position: relative;
+            left: 2rem;
+        }
+
+    }
+
+    &.message-box--info {
+        background-color: lighten($base-blue, 35);
+    }
+
+    &.message-box--error {
+        background-color: lighten($base-red, 35);
+
+        .message-box_icon {
+            color: $base-red;
+        }
+    }
+
+    &.message-box--success {
+        background-color: lighten($base-green, 35);
+    }
+
+}

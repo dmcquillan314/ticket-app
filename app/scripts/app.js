@@ -21,5 +21,8 @@ angular
         'firebase.utils',
         'firebase.auth.utils',
         'image',
-        'signature'
+        'signature',
+        'alert',
+        'form',
+        'ui.bootstrap'
     ]);

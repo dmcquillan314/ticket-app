@@ -1,0 +1,26 @@
+&.button--with-subtext {
+
+    line-height: 1.6rem;
+
+    .button--with-subtext_primary {
+        @include inline-block;
+        font-size: 1.6rem;
+        font-weight: $font-weight3;
+    }
+
+    .button--with-subtext_secondary {
+        @include inline-block;
+        font-size: 1.4rem;
+        font-weight: $font-weight3;
+    }
+
+    &.button--white {
+        .button--with-subtext_primary {
+            color: $darker-grey;
+        }
+
+        .button--with-subtext_secondary {
+            color: $medium-dark-grey;
+        }
+    }
+}

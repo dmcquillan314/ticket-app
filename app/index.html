@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js">
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -13,57 +13,37 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="ticketApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->
-    <div class="container">
-        <div ng-view=""></div>
-    </div>
-
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <!--<script>-->
-       <!--(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){-->
-       <!--(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),-->
-       <!--m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)-->
-       <!--})(window,document,'script','//www.google-analytics.com/analytics.js','ga');-->
-
-       <!--ga('create', 'UA-XXXXX-X');-->
-       <!--ga('send', 'pageview');-->
-    <!--</script>-->
-
-    <!-- build:js(.) scripts/oldieshim.js -->
-    <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.js"></script>
-    <![endif]-->
-    <!-- endbuild -->
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/firebase/firebase.js"></script>
     <script src="bower_components/firebase-simple-login/firebase-simple-login.js"></script>
     <script src="bower_components/mockfirebase/dist/mockfirebase.js"></script>
     <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
     <script src="bower_components/signature_pad/signature_pad.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/lib/angular-scroll.js"></script>
     <script src="scripts/lib/overthrow.js"></script>
+    <script src="scripts/lib/ui-bootstrap-custom-tpls-0.10.0.js"></script>
+    <script src="scripts/alert/alert-module.js"></script>
+    <script src="scripts/alert/controllers/alert-controllers.js"></script>
+    <script src="scripts/alert/directives/alert-directives.js"></script>
+    <script src="scripts/alert/services/alert-services.js"></script>
+    <script src="scripts/form/form-services.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/angularfire/firebase.auth.utils.js"></script>
     <script src="scripts/angularfire/firebase.config.js"></script>
@@ -76,5 +56,52 @@
     <script src="scripts/directives/ngShowHideAuth.js"></script>
     <script src="scripts/routes.js"></script>
     <!-- endbuild -->
+</head>
+<body ng-app="ticketApp">
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<div class="alert" alert>
+
+    <div class="alert_container" ng-switch on="!! alert.templateUrl" ng-if="alert != null">
+
+        <div class="alert_container_content" ng-switch-default>
+            <h2 class="alert_container_content_heading" ng-class=" alert.type === 'warning' ? 'alert_container_content_header--warning' : 'alert_container_content_header--error' ">
+                <span class="alert_container_content_heading_title" ng-if="!! alert.processAsHTML" ng-bind-html="alert.header"></span>
+                <span class="alert_container_content_heading_title" ng-if="! alert.processAsHTML">{{ alert.header }}</span>
+            </h2>
+
+            <div class="alert_container_content_body">
+                <span ng-if="!! alert.processAsHTML" ng-bind-html="alert.body"></span>
+                <span ng-if="! alert.processAsHTML">{{ alert.body}}</span>
+            </div>
+
+            <div class="alert_container_content_navigation" ng-class="{ 'alert_container_content_navigation--multiple-buttons': !! alert.primary && !! alert.secondary }">
+                <div class="alert_container_content_navigation_button" ng-if="!! alert.secondary" ng-switch on="!! alert.secondary.callback">
+                    <button ng-switch-default ng-click="submitAction('secondary')" class="button button--{{ !! alert.secondary.color ? alert.secondary.color : 'blue' }}">{{ !! alert.secondary.text ? alert.secondary.text : 'Ok' }}</button>
+                    <button ng-switch-when="true" ng-click="submitAction('secondary')" loading="true" create-child-element="true" class="button button--{{ !! alert.secondary.color ? alert.secondary.color : 'blue' }}">{{ !! alert.secondary.text ? alert.secondary.text : 'Ok' }}</button>
+                </div><!--
+                --><div class="alert_container_content_navigation_button omega" ng-switch on="!! alert.primary.callback">
+                <button ng-switch-default ng-click="submitAction('primary')" class="button button--{{ !! alert.primary.color ? alert.primary.color : 'blue' }}">{{ !! alert.primary.text ? alert.primary.text : 'Ok' }}</button>
+                <button ng-switch-when="true" ng-click="submitAction('primary')" loading="true" create-child-element="true" class="button button--{{ !! alert.primary.color ? alert.primary.color : 'blue' }}">{{ !! alert.primary.text ? alert.primary.text : 'Ok' }}</button>
+            </div>
+            </div>
+        </div>
+
+        <div class="alert_container_content" ng-switch-when="true">
+            <div ng-include="alert.templateUrl"></div>
+        </div>
+
+    </div>
+
+    <div class="alert_mask mask mask--black" ng-if="isAlertPresent()"></div>
+
+</div>
+<!-- Add your site or application content here -->
+<div class="scrollable">
+    <div class="scrollable-content" ng-view="">
+    </div>
+</div>
+
 </body>
 </html>

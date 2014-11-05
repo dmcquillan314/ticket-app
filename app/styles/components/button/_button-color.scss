@@ -1,0 +1,63 @@
+.button--light-grey {
+    @include button( $light-grey, $darkest-grey );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--lightest-grey {
+    @include button( $lightest-grey, $darkest-grey );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--darker-grey {
+    @include button( $darker-grey, $white );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--orange {
+    @include button( $base-orange, $white );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--green {
+    @include button( $base-green, $white );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--red {
+    @include button( $base-red, $white );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--dark-green {
+    @include button( darken($base-green, 5), $white );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--light-green {
+    @include button( $light-green, $white );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--medium-grey {
+    @include button( $medium-grey, $darkest-grey);
+}
+.button--blue {
+    @include button( $base-blue, $white );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.2) inset );
+}
+.button--white {
+    @include button( $white, $darkest-grey );
+    // @include box-shadow( 0 -2px 0px rgba(0,0,0,0.1) inset );
+    border: 2px solid $light-grey;
+
+    &.no-border {
+        border: none;
+    }
+}
+.button--disabled {
+    background: none;
+    border: 2px solid $lighter-grey;
+    color: $medium-grey;
+    text-align: center;
+    cursor: not-allowed;
+
+    &:hover {
+        background: none;
+    }
+
+    &:active {
+        background: none;
+    }
+}

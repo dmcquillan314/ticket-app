@@ -1,0 +1,82 @@
+$size1: 1.8rem;
+$size2: 2.2rem;
+$size3: 3.2rem;
+$size4: 4rem;
+
+$icon-size-s: $size1;
+$icon-size-m: $size2;
+$icon-size-l: $size3;
+$icon-size-xl: $size4;
+
+.svg-icon-container {
+    &.icon-inline {
+        display: inline-block;
+        vertical-align: top;
+        height: $icon-size-s;
+        width: $icon-size-s;
+
+        &.icon-align--baseline-sub {
+            vertical-align: sub;
+        }
+    }
+
+    &.svg-icon--button {
+        display: inline-block;
+        height: $icon-size-m;
+        width: $icon-size-m;
+        position: relative;
+        top: 0.5rem;
+    }
+
+    &.svg-icon--checkmark {
+        display: none;
+        height: $icon-size-l;
+        width: $icon-size-l;
+        position: absolute;
+        right: 1.5rem;
+        top: 1rem;
+        pointer-events: none;
+    }
+
+}
+
+
+.svg-icon {
+    fill: $base-textColor;
+
+    &.icon-warning{
+        fill: $base-red;
+    }
+
+    &.icon-fill--reverse {
+        fill: $white;
+    }
+
+    &.icon-fill--light {
+        fill: $light-grey;
+    }
+
+    &.icon-fill--medium {
+        fill: $medium-grey;
+    }
+
+    &.icon-fill--orange {
+        fill: $base-orange;
+    }
+
+    &.icon-fill--medium-dark {
+        fill: $medium-dark-grey;
+    }
+
+    &.icon-fill--dark {
+        fill: $darkest-grey;
+    }
+
+    &.icon-fill--red {
+        fill: $base-red;
+    }
+
+    &.icon-fill--green {
+        fill: $base-green;
+    }
+}

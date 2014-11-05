@@ -1,0 +1,145 @@
+@mixin animation-transition($transition) {
+    @include transition($transition);
+}
+
+@mixin in-transition($transition-apply-to: $in-transition-apply-to, $transition-time: $in-transition-time, $timing-function: $in-timing-function) {
+    @include animation-transition($transition-apply-to + ' ' + $transition-time + ' ' $timing-function);
+}
+
+@mixin out-transition($transition-apply-to: $out-transition-apply-to, $transition-time: $out-transition-time, $timing-function: $out-timing-function) {
+    @include animation-transition($transition-apply-to + ' ' + $transition-time + ' ' $timing-function);
+}
+
+@mixin keyframe($animation_name) {
+    @-webkit-keyframes #{$animation_name} {
+        @content;
+    }
+ 
+    @-moz-keyframes #{$animation_name} {
+        @content;
+    }
+ 
+    @-o-keyframes #{$animation_name} {
+        @content;
+    }
+ 
+    @keyframes #{$animation_name} {
+        @content;
+    }
+}
+
+@mixin transition-property( $property: all ) {
+    -webkit-transition-property: $property;
+    -moz-transition-property: $property;
+    -ms-transition-property: $property;
+    -o-transition-property: $property;
+    transition-property: $property;
+}
+
+@mixin animation($animation) {
+    -webkit-animation: $animation;
+    -moz-animation: $animation;
+    -ms-animation: $animation;
+    -o-animation: $animation;
+    animation: $animation;
+ }
+
+
+@include keyframe( spin ) {
+    from { 
+        @include transform( rotate(0deg) );
+    }
+    to { 
+        @include transform( rotate(360deg) );
+    }
+}
+
+@mixin loading-spinner($width: 2) {
+
+    $circleWidth: 4 + $width;
+    $spinnerWidth: $circleWidth + 2;
+
+    $circleString: $circleWidth + px;
+    $spinnerString: $spinnerWidth + px;
+
+    @include transform(translate3D(0,0,0));
+
+    .spinner {
+        display: block;
+        right: 0;
+        position: absolute;
+        top: 50%;
+        margin-top: -0.8rem;
+        content: "";
+        height: 0;
+        width: 0;
+        border-color: transparent $darkest-grey transparent transparent;
+        border-width: $spinnerString;
+        @include border-radius( $spinnerString );
+        @include animation( spin 550ms infinite linear );
+        border-style: solid;
+        z-index:1;
+    }
+
+    .circle {
+        display: block;
+        right: 0.2rem;
+        position: absolute;
+        top: 50%;
+        margin-top: -0.6rem;
+        content: "";
+        height: ($circleWidth * 2) + px;
+        width: ($circleWidth * 2) + px;
+        background-color: $white;
+        @include border-radius( $circleString );
+        z-index: 2;
+    }
+
+}
+
+@mixin loading-spinner-theme($spinnerColor, $circleColor) {
+
+    .spinner {
+        border-color: transparent $spinnerColor transparent transparent;
+    }
+
+    .circle {
+        background-color: $circleColor;
+    }
+}
+
+@include keyframe ( itemAdd ) {
+    0% {
+        opactity:0;
+    }
+    20% {
+        opacity:1;
+    }
+    70% {
+        opacity:1;
+        top:1rem;
+    }
+    100% {
+        opacity:0;
+        top:1rem;
+    }
+}
+
+@include keyframe ( cartShake ) {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    70% {
+        transform: rotate(-10deg);
+    }
+    90% {
+        transform: rotate(10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+

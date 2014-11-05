@@ -1,12 +1,20 @@
-<div class="ticket-information-form">
-    <ng-include src="'views/ticket-pages/ticket-information.html'"></ng-include>
-</div>
-<div class="additional-information-form">
-    <ng-include src="'views/ticket-pages/additional-information.html'"></ng-include>
-</div>
-<div class="user-information-form">
-    <ng-include src="'views/ticket-pages/user-information.html'"></ng-include>
-</div>
-<div class="submission-agreement-form">
-    <ng-include src="'views/ticket-pages/submission-agreement.html'"></ng-include>
+<div class="ticket-submission" ng-switch on="step">
+    <div class="ticket-type" ng-switch-when="ticket-type">
+        <div ng-include="'views/ticket-pages/ticket-type.html'"></div>
+    </div>
+    <div class="ticket-information-form" ng-switch-when="ticket-information">
+        <div ng-include="'views/ticket-pages/ticket-information.html'"></div>
+    </div>
+    <div class="additional-information-form" ng-switch-when="additional-information">
+        <div ng-include="'views/ticket-pages/additional-information.html'"></div>
+    </div>
+    <div class="user-information-form" ng-switch-when="user-information">
+        <div ng-include="'views/ticket-pages/user-information.html'"></div>
+    </div>
+    <div class="submission-agreement-form" ng-switch-when="agreement">
+        <div ng-include="'views/ticket-pages/submission-agreement.html'"></div>
+    </div>
+    <div class="confirmation" ng-switch-when="confirmation">
+        <div ng-include="'views/ticket-pages/confirmation.html'"></div>
+    </div>
 </div>

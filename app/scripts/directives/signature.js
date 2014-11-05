@@ -10,13 +10,18 @@ angular.module('signature', [])
         templateUrl: 'templates/signature.html',
         link: function(scope, element, attrs) {
             var clearButton = element[0].querySelector('[data-action=clear]'),
-                saveButton = element[0].querySelector('[data-action=save]'),
                 canvas = element[0].querySelector('canvas'),
                 signaturePad,
-                model = null;
+                model = null,
+                formController = null;
 
             if(attrs.model) {
                 model = $parse(attrs.model);
+                model.assign(scope, '' );
+            }
+
+            if(attrs.formController) {
+                formController = $parse(attrs.formController)(scope);
             }
 
             // Adjust canvas coordinate space taking into account pixel ratio,
@@ -37,26 +42,23 @@ angular.module('signature', [])
                     void(event);
 
                     if(model) {
-                        model.assign(scope, signaturePad.toDataURL());
+                        model.assign(scope, signaturePad.isEmpty() === false ? signaturePad.toDataURL() : undefined);
+                    }
+
+                    if(formController) {
+                        formController.$setViewValue(signaturePad.isEmpty() === false ? signaturePad.toDataURL() : undefined);
                     }
                 }
             };
 
             signaturePad = new window.SignaturePad(canvas, options);
 
-            clearButton.addEventListener('click', function (event) {
-                void(event);
-                signaturePad.clear();
-            });
-
-            saveButton.addEventListener('click', function (event) {
-                void(event);
-                if (signaturePad.isEmpty()) {
-                    console.log('Please provide signature first.');
-                } else {
-                    window.open(signaturePad.toDataURL());
-                }
-            });
+            if( clearButton !== null ) {
+                clearButton.addEventListener('click', function (event) {
+                    void(event);
+                    signaturePad.clear();
+                });
+            }
         }
     };
 }]);

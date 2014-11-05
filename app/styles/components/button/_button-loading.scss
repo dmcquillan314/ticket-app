@@ -1,0 +1,87 @@
+&.loading-button, &.loading {
+    position: relative;
+
+    .loading-spinner {
+        @include loading-spinner;
+    }
+
+    .loading-spinner {
+        position: absolute;
+        left: 3px;
+        right: 3px;
+        top: 3px;
+        bottom: 3px;
+
+        .circle {
+            right: 50%;
+            top: 50%;
+            margin-top: -6px;
+            margin-right: -6px;
+        }
+        .spinner {
+            right: 50%;
+            top: 50%;
+            margin-top: -8px;
+            margin-right: -8px;
+        }
+    }
+
+    &.button--orange {
+        .loading-spinner {
+            background-color: $base-orange;
+
+            @include loading-spinner-theme($white, $base-orange);
+        }
+    }
+    &.button--white {
+        .loading-spinner {
+            background-color: $white;
+
+            @include loading-spinner-theme( $darkest-grey, $white);
+        }
+    }
+    &.button--light-grey {
+        .loading-spinner {
+            background-color: $light-grey;
+
+            @include loading-spinner-theme($darkest-grey, $light-grey);
+        }
+    }
+    &.button--lightest-grey {
+        .loading-spinner {
+            background-color: $lightest-grey;
+
+            @include loading-spinner-theme($darkest-grey, $lightest-grey);
+        }
+    }
+    &.button--darker-grey {
+        .loading-spinner {
+            background-color: $darker-grey;
+
+            @include loading-spinner-theme($white, $darker-grey);
+        }
+    }
+    &.button--green {
+        .loading-spinner {
+            background-color: $base-green;
+
+            @include loading-spinner-theme($white, $base-green);
+        }
+    }
+
+    &.button--blue {
+        .loading-spinner {
+            background-color: $base-blue;
+
+            @include loading-spinner-theme($white, $base-blue);
+        }
+    }
+
+    &.button--red {
+        .loading-spinner {
+            background-color: $base-red;
+
+            @include loading-spinner-theme($white, $base-red);
+        }
+    }
+}

@@ -1,10 +1,42 @@
 angular.module('ticketApp')
 
-.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'ticket', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired', function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil, authRequired) {
+.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'ticket', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired',
+function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil, authRequired) {
     'use strict';
+
+    var steps = [
+        'ticket-type',
+        'ticket-information',
+        'additional-information',
+        'user-information',
+        'agreement',
+        'confirmation'
+    ];
 
     $scope.isAnonymous = function() {
         return user.provider === 'anonymous';
+    };
+
+    var isNotStepping = true,
+        curStep = ticket !== null && typeof ticket.lastSubmittedStep !== 'undefined' && angular.isNumber(ticket.lastSubmittedStep) ?
+            ( ticket.lastSubmittedStep + 1 < steps.length ? ticket.lastSubmittedStep + 1 : steps.length - 1 )
+            :
+            0;
+
+    $scope.step = steps[curStep];
+
+    $scope.prevStep = function() {
+        if(isNotStepping && curStep > 0) {
+            curStep--;
+            $scope.step = steps[curStep];
+        }
+    };
+
+    $scope.nextStep = function() {
+        if(isNotStepping && curStep < steps.length) {
+            curStep++;
+            $scope.step = steps[curStep];
+        }
     };
 
     if(ticket === null) {
@@ -19,8 +51,8 @@ angular.module('ticketApp')
     if( ! ticket.additional.images ) {
         ticket.additional.images = [
             { id: 1 },
-            { id: 1 },
-            { id: 1 }
+            { id: 2 },
+            { id: 3 }
         ];
     }
     if( ! ticket.agreement ) {
@@ -60,6 +92,41 @@ angular.module('ticketApp')
         return deferred.promise;
     };
 
+    var submitTicket = function() {
+        var ref = firebaseUtil.ref('tickets', user.uid),
+            deferred = $q.defer();
+
+        // copying will remove angular properties
+        var ticketCopy = angular.copy(ticket);
+
+        if(ticketCopy.submitted !== true) {
+            ticketCopy.lastSubmittedStep = curStep;
+        }
+
+        ref.set(ticketCopy, function(error) {
+            if( error ) {
+                $scope.error = 'Error uploading ticket information.';
+            } else {
+
+                if(steps[curStep] === 'agreement' ) {
+                    ticketCopy.submitted = true;
+                    delete ticketCopy.lastSubmittedStep;
+
+                    submitTicket().then(function() {
+                        deferred.resolve();
+                    });
+                } else {
+                    deferred.resolve();
+                    $scope.$apply(function() {
+                        $scope.nextStep();
+                    });
+                }
+            }
+        });
+
+        return deferred.promise;
+    };
+
     var submitUserInformation = function(profile, id) {
         var ref = firebaseUtil.ref('users', id),
             deferred = $q.defer();
@@ -78,26 +145,25 @@ angular.module('ticketApp')
             if( err ) {
                 deferred.reject(err);
             } else {
-                deferred.resolve();
-                firebaseUtil.syncObject('users/' + user.uid).$bindTo($scope, 'profile');
+                ref.once('value', function(snapshot) {
+                    angular.extend($scope.profile, snapshot.val());
+
+                    submitTicket().then(function() {
+                        deferred.resolve();
+
+                        $scope.$apply(function() {
+                            $scope.nextStep();
+                        });
+                    });
+                }, function(error) {
+                    void(error);
+                });
             }
         });
 
     };
 
-    $scope.submitTicket = function() {
-        var ref = firebaseUtil.ref('tickets', user.uid);
-
-        // copying will remove angular properties
-        var ticketCopy = angular.copy(ticket);
-
-        ref.set(ticketCopy, function(error) {
-            if( error ) {
-                $scope.error = 'Error uploading ticket information.';
-            } else {
-            }
-        });
-    };
+    $scope.submitTicket = submitTicket;
 
     $scope.createUser = function(profile) {
         $scope.error = null;

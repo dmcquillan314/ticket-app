@@ -1,0 +1,37 @@
+.view-heading__main {
+    font-size: $base-h2-size;
+    border-bottom: 0.2rem solid $base-green;
+    line-height: 2.1rem;
+    font-weight: $font-weight3;
+    color: $base-green;
+    text-align: left;
+    margin-bottom:$global-padding * 2;
+    padding-bottom:$global-padding;
+
+    svg {
+        fill: $base-green;
+    }
+}
+
+.heading__secondary {
+    font-size: $base-h3-size;
+    font-weight: $font-weight3;
+    color: $base-green;
+    margin-bottom:$global-padding;
+}
+
+.heading__generic {
+    font-weight: $font-weight3;
+}
+
+
+%heading-width {
+    @include experimental-value(width, calc(100% - 2rem));
+}
+
+.view-heading--product-list {
+    margin-left:$global-padding;
+    @extend %heading-width;
+}
+
+

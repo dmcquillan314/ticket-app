@@ -1,0 +1,142 @@
+.alert {
+    text-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+.alert_mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+}
+
+.mask.alert_mask {
+    z-index: 1000;
+}
+
+.alert_container {
+
+    z-index: 1002;
+    position:absolute;
+    background-color: $white;
+    right: 0;
+    left: 0;
+    @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+
+    &.alert_container--error {
+        z-index: 1001;
+        background-color: $base-red;
+        color: $white;
+        padding: $global-padding;
+    }
+
+    &.ng-enter {
+        @include in-transition;
+        @include transform( translate3d(0, -100%, 0) );
+
+        &.ng-enter-active {
+            @include transform( translate3d(0, 0, 0) );
+        }
+    }
+
+    &.ng-leave {
+        @include out-transition;
+        @include transform( translate3d(0, 0, 0) );
+
+        &.ng-leave-active {
+            @include transform( translate3d(0, -100%, 0) );
+        }
+    }
+}
+
+.alert_container_content {
+    @include inline-block;
+    padding: $global-padding;
+    width: 100%;
+}
+
+.alert_container_content_heading {
+    @include inline-block;
+
+    &.alert_container_content_header--error {
+
+        .svg-icon {
+            fill: $base-red;
+        }
+
+        color: $base-red;
+    }
+
+    &.alert_container_content_header--warning {
+
+        .svg-icon {
+            fill: $base-green;
+        }
+
+        color: $base-green;
+    }
+
+}
+
+.alert_container_content_heading_icon {
+    width: 2rem;
+    left: $global-padding;
+    position: absolute;
+    height:2rem;
+}
+
+.alert_container_content_heading_title {
+    padding-left: 2.4rem;
+    font-weight:$font-weight3;
+}
+
+.alert_container_content_body {
+    @include inline-block;
+}
+
+.alert_container_content_navigation {
+    @include inline-block;
+    width: 100%;
+}
+
+.alert_container_content_navigation--multiple-buttons {
+
+    .alert_container_content_navigation_button {
+        @include inline-block;
+        width: 50%;
+        padding-right: $global-padding / 2.0;
+
+        &.omega {
+            padding-right: 0;
+            padding-left: $global-padding / 2.0;
+        }
+    }
+}
+
+.alert_container_content_navigation_button {
+    @include inline-block;
+    width: 100%;
+
+    .button {
+        width: 100%;
+        float:right;
+    }
+}
+
+.alert_container_dismiss {
+    position: absolute;
+    top: $global-padding;
+    right: $global-padding;
+    color: $medium-dark-grey;
+    font-size: 3.0rem;
+}
+
+@import "components/alert/alert-mobile";
+@import "components/alert/alert-tablet";

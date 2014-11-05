@@ -1,16 +1,18 @@
-<form role="form" name="submission-agreement" ng-submit="submitTicket()">
+<form role="form" name="submissionAgreement" ng-submit="submitTicket()" novalidate>
 
     <h2>All set?</h2>
 
     <p>We are generating your statement and it will be mailed in a matter of moments. Please take the time to review your statement. If you agree with the contents of the statement and would like us to send it to the city, please sign and send.</p>
 
-    <div class="signature-pad" model="agreement.signature"></div>
+    <input name="signature" type="text" required ng-model="agreement.signature" />
+    <div class="signature-pad" form-controller="submissionAgreement.signature"></div>
 
     <p>
         {{ error.message }}
     </p>
 
     <p>
-        <button type="submit" class="btn btn-primary">I agree</button>
+        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary" type="submit ">Next</button>
     </p>
 </form>

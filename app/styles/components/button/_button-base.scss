@@ -1,0 +1,50 @@
+// Button Colors and States
+// 
+// Markup:
+// <button type="button" class="button {$modifiers}">Action</button>
+// 
+// .button--light-grey - Light Grey
+// .button--lightest-grey - Lightest Grey
+// .button--darker-grey - Darker Grey
+// .button--orange - Orange
+// .button--green - Green
+// .button--blue - Blue
+// .button--white - White
+// .button--disabled - Disabled, Active and Hover
+// 
+// Styleguide 4.1
+
+.button {
+    @include border-radius( $standard-border-radius );
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: $font-weight3;
+    height: $button-height;
+    line-height:$button-height;
+
+    @import "components/button/button-subtext";
+    @import "components/button/button-icon";
+    @import "components/button/button-loading";
+    @import "components/button/button-width";
+    @import "components/button/button-bordered";
+}
+
+@import "components/button/button-color";
+
+.button-expanded {
+    position: relative;
+
+    &:after {
+        position: absolute;
+        height: 140%;
+        width: 140%;
+        top: -20%;
+        left: -20%;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        content: "";
+        background-color: transparent;
+    }
+}

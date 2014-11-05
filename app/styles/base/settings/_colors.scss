@@ -1,0 +1,80 @@
+// Colors
+//
+// <h3>Key to WCAG AA icons: </h3>
+// <p><span class="kss-color-status wcag-aa-pass icon_like"></span> color contrast passes at standard text sizes</p>
+// <p><span class="kss-color-status wcag-a-pass icon_like"></span> color contrast passes only with bold or large text</p>
+// <p><span class="kss-color-status wcag-aa-pass icon_dislike"></span> color contrast does not pass</p>
+//
+// Markup:
+// <div class="colors {$modifiers}"></div><div class="kss-wcag"><span class="kss-contrast-ratio">contrast w/white: <span class="kss-wcag-contrast-white"></span>:1</span><br><span class="kss-contrast-ratio">contrast w/dark grey (default text color): <span class="kss-wcag-contrast-text"></span>:1</span></div>
+//
+// .colors-base-green - <span class="kss-example-colorKey"></span>
+// .colors-base-orange - <span class="kss-example-colorKey"></span>
+// .colors-base-blue - <span class="kss-example-colorKey"></span>
+// .colors-base-purple - <span class="kss-example-colorKey"></span>
+// .colors-base-red - <span class="kss-example-colorKey"></span>
+// .colors-base-yellow - <span class="kss-example-colorKey"></span>
+// 
+// Styleguide 1.1
+
+// High Contrast Colors
+//
+// An additional set of high contrast color for accessibility (user-selectable option). To be determined.
+//
+// Styleguide 1.2
+
+// Greys
+//
+// Markup:
+// <div class="colors {$modifiers}"></div>
+// 
+// .colors-lightest-grey - <strong>lightest grey</strong><span class="kss-example-colorKey"></span>
+// .colors-lighter-grey - <strong>lighter grey</strong><span class="kss-example-colorKey"></span>
+// .colors-light-grey - <strong>light grey</strong><span class="kss-example-colorKey"></span>
+// .colors-medium-grey - <strong>grey</strong><span class="kss-example-colorKey"></span>
+// .colors-medium-dark-grey - <strong>medium grey</strong><span class="kss-example-colorKey"></span>
+// .colors-dark-grey - <strong>charcoal grey</strong><span class="kss-example-colorKey"></span>
+// .colors-darker-grey - <strong>darker grey</strong><span class="kss-example-colorKey"></span>
+// .colors-darkest-grey - <strong>darkest grey</strong><span class="kss-example-colorKey"></span>
+//
+// Styleguide 1.3
+
+
+/* Oranges */
+$base-orange: #ff6d36;
+
+/* Blues */
+$base-blue: #0272cd;
+
+/* Greens */
+$base-green: #5ea000;
+$light-green: #85bc59;
+
+/* Purples */
+$base-purple: #805b9d; 
+
+/* Reds */
+$base-red: #ea4444;
+
+/* Yellows */
+$base-yellow: #ffc536;
+
+/* Greys */
+$dark-grey: #999999;
+$darker-grey: #595959;
+$darkest-grey: #363636;
+
+$medium-dark-grey: #a1a1a1;
+$medium-grey: #bcbcbc;
+
+$light-grey: #d7d7d7;
+$lighter-grey: #e4e4e4;
+$lightest-grey: #f2f2f2;
+$white: #ffffff;
+$white-mask: rgba(255,255,255,0.7);
+
+
+/* color usage */
+$base-textColor: $darkest-grey;
+$strong-emph-error-color: $base-red;
+$secondary-emph-error-color: $base-blue;

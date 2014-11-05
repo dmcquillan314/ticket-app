@@ -1,4 +1,4 @@
-<form role="form" name="user-information" ng-submit="isAnonymous() ? createUser(profile) : submitUserInformation(profile)">
+<form role="form" name="user-information" ng-submit="isAnonymous() ? createUser(profile) : submitUserInformation(profile)" novalidate>
     <label class="form-group" ng-if="isAnonymous()">
         <p>email</p>
         <input required name="email" type="email" ng-model="profile.email" class="form-control" />
@@ -46,6 +46,7 @@
     </p>
 
     <p>
-        <button  class="btn btn-primary" type="submit ">Submit</button>
+        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary" type="submit ">Next</button>
     </p>
 </form>

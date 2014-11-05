@@ -1,4 +1,4 @@
-<form role="form" name="user-information" ng-submit="submitTicket()">
+<form role="form" name="user-information" ng-submit="submitTicket()" novalidate>
 
     <h2>Additional Information</h2>
 
@@ -18,6 +18,7 @@
     </p>
 
     <p>
-        <button type="submit" class="btn btn-primary">Submit Ticket Information</button>
+        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary" type="submit ">Next</button>
     </p>
 </form>

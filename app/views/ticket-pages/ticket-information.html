@@ -1,4 +1,4 @@
-<form role="form" name="user-information" ng-submit="submitTicket()">
+<form role="form" name="user-information" ng-submit="submitTicket()" novalidate>
     <label class="form-group">
         <p>Ticket number</p>
         <input required name="ticketNumber" type="text" ng-model="ticket.number" class="form-control" />
@@ -11,23 +11,40 @@
 
     <div class="checkbox-container">
         <div class="form-group form-group--checkbox">
-            <input id="failedToPay" ng-model="ticket.reason.failedToPay.flag" required name="reason" type="checkbox" value="true" class="form-control" />
-            <label for="failedToPay">Failed to pay parking meter.</label>
+            <input id="paymentMalfunction" ng-model="ticket.reason.paymentMalfunction.flag" name="reason" type="checkbox" value="true" class="form-control" />
+            <label for="paymentMalfunction">Unable to pay meter.</label>
         </div>
+
+        <div class="form-group" ng-if="ticket.reason.paymentMalfunction.flag">
+            <div class="form-group form-group--checkbox">
+                <input id="brokenMeter" ng-model="ticket.reason.paymentMalfunction.meter.flag" name="reason" type="checkbox" value="true" class="form-control" />
+                <label for="brokenMeter">Broken parking meter.</label>
+                <label class="form-group" ng-if="ticket.reason.paymentMalfunction.meter.flag">
+                    <p>Meter id</p>
+                    <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.id">
+                </label>
+                <label class="form-group" ng-if="ticket.reason.paymentMalfunction.meter.flag">
+                    <p>Call 888-888-8888 to report the meter and get a report confirmation number.</p>
+                    <p>Report number</p>
+                    <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.reportNumber">
+                </label>
+            </div>
+        </div>
+
         <div class="form-group form-group--checkbox">
-            <input id="handicapped" ng-model="ticket.reason.handicapped.flag" required name="reason" type="checkbox" value="true" class="form-control" />
+            <input id="handicapped" ng-model="ticket.reason.handicapped.flag" name="reason" type="checkbox" value="true" class="form-control" />
             <label for="handicapped">Parked in handicapped spot.</label>
         </div>
         <div class="form-group form-group--checkbox">
-            <input id="streetCleaning" ng-model="ticket.reason.streetCleaning.flag" required name="reason" type="checkbox" value="true" class="form-control" />
+            <input id="streetCleaning" ng-model="ticket.reason.streetCleaning.flag" name="reason" type="checkbox" value="true" class="form-control" />
             <label for="streetCleaning">Obstructing street cleaning.</label>
         </div>
         <div class="form-group form-group--checkbox">
-            <input id="parkingReceipt" ng-model="ticket.reason.parkingReceipt.flag" required name="reason" type="checkbox" value="true" class="form-control" />
-            <label for="failedToPay">No parking receipt.</label>
+            <input id="parkingReceipt" ng-model="ticket.reason.parkingReceipt.flag" name="reason" type="checkbox" value="true" class="form-control" />
+            <label for="parkingReceipt">No parking receipt.</label>
         </div>
         <div class="form-group form-group--checkbox">
-            <input id="other" ng-model="ticket.reason.other.flag"required name="reason" type="checkbox" value="true" class="form-control" />
+            <input id="other" ng-model="ticket.reason.other.flag" name="reason" type="checkbox" value="true" class="form-control" />
             <label for="other">Other.</label>
             <input class="form-group--checkbox_other" ng-if="ticket.reason.other.flag" type="text" ng-model="ticket.reason.other.text">
         </div>
@@ -38,6 +55,7 @@
     </p>
 
     <p>
-        <button type="submit" class="btn btn-primary">Submit Ticket Information</button>
+        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary" type="submit ">Next</button>
     </p>
 </form>

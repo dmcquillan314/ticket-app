@@ -1,0 +1,127 @@
+// Font Weights
+//
+// Peapod.com uses the Proxima Nova and Proxima Nova Soft font families. The following are a sampling of the type variants at typical sizes
+//
+// <div class="kss-type-demo">
+//      <h1>Amaze & Delight</h1>
+//      <p class="kss-type-details"> Promxima Nova Soft - regular | font-size: 28px</p>
+// </div>
+// <div class="kss-type-demo">
+//      <h2>Amaze & Delight</h2>
+//      <p class="kss-type-details"> Promxima Nova Soft - semibold | font-size: 22px</p>
+// </div>
+// <div class="kss-type-demo">
+//      <h2 class="reverse">Amaze & Delight</h2>
+//      <p class="kss-type-details"> Promxima Nova Soft - bold | font-size: 24px</p>
+// </div>
+// <div class="kss-type-demo">
+//      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eros ante, venenatis eu nisi in, feugiat hendrerit sem. Quisque quis risus neque. Donec eu lectus augue. Nullam tristique mollis elit. Integer elementum sapien dui, vitae ultrices enim cursus eu. Nam tempus faucibus urna nec porttitor. Phasellus euismod nibh nec ante.</p>
+//      <p class="kss-type-details"> Promxima Nova (regular) | font-size: 16px</p>
+// </div>
+//
+// Styleguide 2.1
+
+/* %font-base-proxima {
+    font-family: 'ProximaNova', sans-serif;
+    font-style: normal;
+} */
+
+%font-base-proxima-soft {
+    font-family: 'ProximaNovaSoft', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: antialiased;
+    -webkit-text-rendering: optimizeLegibility;
+    text-rendering: optimizeLegibility;
+    font-style: normal;
+}
+
+%default-font {
+    @extend %font-base-proxima-soft;
+    font-weight: $font-weight1;
+}
+
+/* %proximaNova {
+    @extend %font-base-proxima;
+    font-weight: $font-weight1;
+}
+
+%proximaNova-semibold {
+    @extend %font-base-proxima;
+    font-weight: $font-weight3;
+}
+
+%proximaNova-bold {
+    @extend %font-base-proxima;
+    font-weight: $font-weight4;
+} */
+
+%proximaNova-soft {
+    @extend %font-base-proxima-soft;
+    font-weight: $font-weight1;
+}
+
+%proximaNova-soft-med {
+    @extend %font-base-proxima-soft;
+    font-weight: $font-weight3;
+}
+
+%proximaNova-soft-semibold {
+    @extend %font-base-proxima-soft;
+    font-weight: $font-weight3;
+}
+
+%proximaNova-soft-bold {
+    @extend %font-base-proxima-soft;
+    font-weight: $font-weight3;
+}
+
+%header-text--bold {
+    font-size:2.1rem;
+    font-weight:$font-weight3;
+}
+
+%header-text--bold_small {
+    font-size:1.8rem;
+    font-weight:$font-weight3;
+}
+
+@mixin elegant-icon-font {
+    font-family: 'ElegantIcons';
+    speak: none;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin font-feature-settings( $type: 'tnum' ) {
+    -webkit-font-feature-settings: $type;
+    -moz-font-feature-settings: $type;
+    -ms-font-feature-settings: $type;
+    -o-font-feature-settings: $type;
+    font-feature-settings: $type;
+}
+
+body {
+    @extend %default-font;
+}
+
+.light-text {
+    color: $medium-grey;
+}
+
+.strong-emph,
+.error-text {
+    color: $strong-emph-error-color;
+    font-weight:$font-weight3;
+}
+
+.secondary-emph {
+    color: $secondary-emph-error-color;
+}
+
+a.text-link {
+    color: $base-green;
+    font-weight: $font-weight3;
+}

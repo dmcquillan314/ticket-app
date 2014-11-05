@@ -1,0 +1,57 @@
+$in-transition-apply-to: all;
+$in-transition-time: 200ms;
+$in-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.0);
+
+$out-transition-apply-to: all;
+$out-transition-time: 200ms;
+$out-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.0);
+
+$header-border-bottom: 0.2rem;
+$header-padding: 1rem;
+$global-padding: 1rem;
+
+$tablet-header-height: 6.4rem;
+$mobile-header-height: 4.4rem;
+$desktop-header-height: $tablet-header-height;
+$header-height: $tablet-header-height;
+
+$standard-border-radius: 0.2rem;
+$large-border-radius: 0.6rem;
+
+$mobile-header-padding-y: 0.7rem;
+$mobile-header-padding-x: $header-padding;
+$tablet-header-padding-y: $header-padding;
+$tablet-header-padding-x: $header-padding;
+
+$footer-height-mobile: 6.4rem;
+$footer-height-tablet: 6.4rem;
+
+$mobile-button-height-header: $mobile-header-height - 2 * $mobile-header-padding-y;
+$tablet-button-height-header: $tablet-header-height - 2 * $tablet-header-padding-y;
+$desktop-button-height-header: $desktop-header-height - 2 * $header-padding - $header-border-bottom;
+
+$button-height: 4.4rem;
+$input-field-height: $button-height;
+
+// =========== Fonts ============= //
+
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+$bold: 700;
+
+$font-weight1: $regular;
+$font-weight2: $medium;
+$font-weight3: $semi-bold;
+$font-weight4: $bold;
+
+// ============ Font Colors ============= //
+.text--base-green { color:$base-green; }
+.text--base-orange { color:$base-orange; }
+.text--medium-dark-grey { color:$medium-dark-grey; }
+.text--base { color:$darkest-grey; }
+.text--base-red { color:$base-red; }
+.text--base-light-grey { color:$light-grey; }
+.text--base-medium-grey { color:$medium-grey; }
+.text--base-blue { color:$base-blue; }
+.text--base-strong { font-weight: $font-weight3; }

@@ -1,0 +1,42 @@
+@mixin promoTile-width( $col-width ) {
+    float: left;
+
+    @if $col-width == "one-third" {
+        width: 31.8%;
+    }
+
+    @if $col-width == "half" {
+        @include experimental-value(width, calc(50% - 1.5rem))
+    }
+
+    @if $col-width == "two-thirds" {
+        width: 64%;
+    }
+
+    @if $col-width == "full" {
+        @include experimental-value(width, calc(100% - 2rem));
+        margin:1rem auto 2rem;
+        float: none;
+    }
+}
+
+@mixin promoTile-colors($bg-color, $text-color) {
+
+    background: $bg-color; 
+    color: $text-color;
+
+    @if $bg-color == $white {
+        border: 2px solid $text-color;
+
+        h6 {
+            border-bottom: 1px solid adjust-color($text-color, $red:55,$blue:55,$green:55);
+        }
+    }
+
+    @else {
+        h6{
+            border-bottom: 1px solid adjust-color($bg-color, $red:55,$blue:55,$green:55);
+        }
+    }
+}
+

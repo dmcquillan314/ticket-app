@@ -1,0 +1,24 @@
+&.button-width--full {
+    width: 100%
+}
+
+&.button-width--half {
+    @include experimental-value(width, calc(50% - 0.75rem));
+    margin-right: $global-padding;
+
+    &.omega {
+        margin-right: 0;
+    }
+}
+
+&.button-width--small {
+    width: $button-s;
+}
+
+&.button-width--med {
+    width: $button-m;
+}
+
+&.button-width--lg {
+    width: $button-l
+}

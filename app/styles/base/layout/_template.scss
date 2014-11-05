@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    font-size: $base-rem;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    @extend %default-font;
+    -webkit-tap-highlight-color: transparent !important;
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+    margin: 0;
+    background-color: $white;
+    color: $base-textColor;
+    width: 100%;
+    overflow: hidden;
+
+    &.authValidating {
+        visibility: hidden;
+    }
+}
+
+.sidebar {
+    width: 100%;
+    height: auto;
+    top:0;
+    bottom: 0;
+    // height: 100%;
+    position:absolute;
+}
+
+.sidebar {
+    z-index: 102;
+    top: 0;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.main-modal {
+        z-index: 102;
+    }
+
+    &.sidebar--menu {
+        background-color: $darkest-grey;
+    }
+}
+
+.mask.main-modal-mask {
+    z-index: 2;
+}
+
+.main {
+    width: 100%;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+}
+
+.product-view-subheader {
+    position:relative;
+    height:$header-height;    
+    border-bottom:none !important;
+}
+
+.tablet {
+    .wrapper {
+        top: $tablet-header-height;
+    }
+
+    &.withSubheader .wrapper {
+        top: 2 * $tablet-header-height;
+    }
+    .sidebar--left {
+        width: 32rem;
+    }
+
+    .sidebar--right {
+        right: 0;
+        width: 32rem;
+    }
+}
+
+.mobile {
+
+    .wrapper {
+        top: $mobile-header-height;
+    }
+    
+    .sidebar--left {
+        width: 90%;
+        min-width: 24rem;
+    }
+
+    &.withSubheader .wrapper {
+        top: ($mobile-header-height * 2);
+
+    }
+}
+
+
+
+.ppd-hide, .ng-hide {
+    @include hide-content;
+}
+
+div, span, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+    &:focus {
+        outline: none;
+    }
+}
+
+/* Desktop template styles */
+
+.desktop {
+
+    .wrapper {
+        position:relative;
+        top:0;       
+    }
+}
+
+.ppd-hide, .ng-hide {
+    @include hide-content;
+}
+
+div, span, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+    &:focus {
+        outline: none;
+    }
+}

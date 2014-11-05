@@ -1,0 +1,5 @@
+.button_icon {
+    @include inline-block;
+    padding: 0 $global-padding / 2;
+    vertical-align:baseline;
+}
