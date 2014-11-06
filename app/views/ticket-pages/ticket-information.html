@@ -1,61 +1,98 @@
-<form role="form" name="user-information" ng-submit="submitTicket()" novalidate>
-    <label class="form-group">
-        <p>Ticket number</p>
+<form role="form" class="col-xs-12" name="userInformation" ng-submit="submitTicket()" novalidate>
+    <h2>Ticket Information</h2>
+
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.ticketNumber)">
+        <p class="control-label">Ticket number</p>
         <input required name="ticketNumber" type="text" ng-model="ticket.number" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.ticketNumber.$error" collapse="! showClientValidationError(userInformation.ticketNumber)">
+            <span ng-message-when="required">Ticket number is not valid</span>
+        </p>
     </label>
-    <label class="form-group">
-        <p>Ticket photo</p>
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.ticketPhoto)">
+        <p class="control-label">Ticket photo</p>
+        <input type="hidden" name="ticketPhoto" ng-model="ticket.image.data" required />
         <input required name="photo" type="file" image-upload="ticket.image" class="form-control" />
-        <img style="max-height: 50px" ng-src="{{ ticket.image.data }}" alt="{{ ticket.number }}" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.ticketPhoto.$error" collapse="! showClientValidationError(userInformation.ticketPhoto)">
+            <span ng-message-when="required">Ticket image not specified.</span>
+        </p>
     </label>
 
-    <div class="checkbox-container">
-        <div class="form-group form-group--checkbox">
-            <input id="paymentMalfunction" ng-model="ticket.reason.paymentMalfunction.flag" name="reason" type="checkbox" value="true" class="form-control" />
-            <label for="paymentMalfunction">Unable to pay meter.</label>
-        </div>
+    <div class="checkbox row col-xs-12">
+        <label>
+            <input ng-model="ticket.reason.paymentMalfunction.flag" name="reason" type="checkbox" value="true" />
+            Unable to pay meter
+        </label>
+    </div>
 
-        <div class="form-group" ng-if="ticket.reason.paymentMalfunction.flag">
-            <div class="form-group form-group--checkbox">
-                <input id="brokenMeter" ng-model="ticket.reason.paymentMalfunction.meter.flag" name="reason" type="checkbox" value="true" class="form-control" />
-                <label for="brokenMeter">Broken parking meter.</label>
-                <label class="form-group" ng-if="ticket.reason.paymentMalfunction.meter.flag">
-                    <p>Meter id</p>
-                    <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.id">
-                </label>
-                <label class="form-group" ng-if="ticket.reason.paymentMalfunction.meter.flag">
-                    <p>Call 888-888-8888 to report the meter and get a report confirmation number.</p>
-                    <p>Report number</p>
-                    <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.reportNumber">
-                </label>
-            </div>
+    <div class="col-xs-offset-1 row col-xs-11" ng-if="ticket.reason.paymentMalfunction.flag">
+        <div class="checkbox">
+            <label>
+                <input ng-model="ticket.reason.paymentMalfunction.meter.flag" name="paymentMalfunction" type="checkbox" value="true" />
+                Broken parking meter.
+            </label>
         </div>
+        <div class="col-xs-offset-1" ng-if="ticket.reason.paymentMalfunction.meter.flag">
+            <label class="form-group">
+                <p>Meter id</p>
+                <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.id" class="form-control">
+            </label>
+            <label class="form-group">
+                <p>Call 888-888-8888 to report the meter and get a report confirmation number.</p>
+                <p>Report number</p>
+                <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.reportNumber" class="form-control">
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input ng-model="ticket.reason.paymentMalfunction.other.flag" name="paymentMalfunction" type="checkbox" value="true" />
+                Other
+            </label>
+        </div>
+        <div class="form-inline" ng-if="ticket.reason.paymentMalfunction.other.flag">
+            <input required class="form-control" type="text" ng-model="ticket.reason.paymentMalfunction.other.text">
+        </div>
+    </div>
 
-        <div class="form-group form-group--checkbox">
-            <input id="handicapped" ng-model="ticket.reason.handicapped.flag" name="reason" type="checkbox" value="true" class="form-control" />
-            <label for="handicapped">Parked in handicapped spot.</label>
-        </div>
-        <div class="form-group form-group--checkbox">
-            <input id="streetCleaning" ng-model="ticket.reason.streetCleaning.flag" name="reason" type="checkbox" value="true" class="form-control" />
-            <label for="streetCleaning">Obstructing street cleaning.</label>
-        </div>
-        <div class="form-group form-group--checkbox">
-            <input id="parkingReceipt" ng-model="ticket.reason.parkingReceipt.flag" name="reason" type="checkbox" value="true" class="form-control" />
-            <label for="parkingReceipt">No parking receipt.</label>
-        </div>
-        <div class="form-group form-group--checkbox">
-            <input id="other" ng-model="ticket.reason.other.flag" name="reason" type="checkbox" value="true" class="form-control" />
-            <label for="other">Other.</label>
-            <input class="form-group--checkbox_other" ng-if="ticket.reason.other.flag" type="text" ng-model="ticket.reason.other.text">
-        </div>
+    <div class="checkbox row col-xs-12">
+        <label>
+            <input ng-model="ticket.reason.handicapped.flag" name="reason" type="checkbox" value="true" />
+            Parked in handicapped spot.
+        </label>
+    </div>
+    <div class="checkbox row col-xs-12">
+        <label>
+            <input ng-model="ticket.reason.streetCleaning.flag" name="reason" type="checkbox" value="true" />
+            Obstructing street cleaning.
+        </label>
+    </div>
+    <div class="checkbox row col-xs-12">
+        <label>
+            <input ng-model="ticket.reason.parkingReceipt.flag" name="reason" type="checkbox" value="true" />
+            No parking receipt.
+        </label>
+    </div>
+    <div class="checkbox row col-xs-12">
+        <label>
+            <input ng-model="ticket.reason.other.flag" name="reason" type="checkbox" value="true" />
+            Other
+        </label>
+    </div>
+    <div class="form-group row col-xs-12" ng-if="ticket.reason.other.flag" ng-class="getCssClasses(userInformation.otherReason)">
+        <input required name="otherReason" class="form-control" type="text" ng-model="ticket.reason.other.text">
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.otherReason.$error" collapse="! showClientValidationError(userInformation.otherReason)">
+            <span ng-message-when="required">You must specify an other reason</span>
+        </p>
     </div>
 
     <p>
         {{ error.message }}
     </p>
 
-    <p>
-        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
-        <button  class="btn btn-primary" type="submit ">Next</button>
-    </p>
+    <div class="row col-xs-12">
+        <button  class="btn btn-default col-xs-4" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary col-xs-4 col-xs-push-4" type="submit ">Next</button>
+    </div>
 </form>

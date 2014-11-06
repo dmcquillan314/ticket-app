@@ -1,7 +1,7 @@
 angular.module('ticketApp')
 
-.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'ticket', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired',
-function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil, authRequired) {
+.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'ticket', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired', 'TicketService',
+function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil, authRequired, TicketService) {
     'use strict';
 
     var steps = [
@@ -12,6 +12,36 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
         'agreement',
         'confirmation'
     ];
+
+    var setup = function() {
+        if(ticket === null) {
+            ticket = {};
+        }
+        if( ! ticket.image ) {
+            ticket.image = {};
+        }
+        if( ! ticket.additional ) {
+            ticket.additional = {};
+        }
+        if( ! ticket.additional.images ) {
+            ticket.additional.images = [
+                { id: 1 },
+                { id: 2 },
+                { id: 3 }
+            ];
+        }
+        if( ! ticket.agreement ) {
+            ticket.agreement = {};
+        }
+        if(profile === null) {
+            profile = {};
+        }
+
+        $scope.profile = profile;
+        $scope.ticket = ticket;
+        $scope.agreement = ticket.agreement;
+        $scope.additional = ticket.additional;
+    };
 
     $scope.isAnonymous = function() {
         return user.provider === 'anonymous';
@@ -25,53 +55,33 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
     $scope.step = steps[curStep];
 
+    setup();
+
     $scope.prevStep = function() {
         if(isNotStepping && curStep > 0) {
-            curStep--;
-            $scope.step = steps[curStep];
+            TicketService.retrieve().then(function(ticketObject) {
+                ticket = ticketObject;
+                setup();
+                curStep--;
+                $scope.step = steps[curStep];
+            });
         }
     };
 
     $scope.nextStep = function() {
         if(isNotStepping && curStep < steps.length) {
-            curStep++;
-            $scope.step = steps[curStep];
+            TicketService.retrieve().then(function(ticketObject) {
+                ticket = ticketObject;
+                setup();
+                curStep++;
+                $scope.step = steps[curStep];
+            });
         }
     };
-
-    if(ticket === null) {
-        ticket = {};
-    }
-    if( ! ticket.image ) {
-        ticket.image = {};
-    }
-    if( ! ticket.additional ) {
-        ticket.additional = {};
-    }
-    if( ! ticket.additional.images ) {
-        ticket.additional.images = [
-            { id: 1 },
-            { id: 2 },
-            { id: 3 }
-        ];
-    }
-    if( ! ticket.agreement ) {
-        ticket.agreement = {};
-    }
-    if(profile === null) {
-        profile = {};
-    }
-
-    $scope.profile = profile;
-    $scope.ticket = ticket;
-    $scope.agreement = ticket.agreement;
-    $scope.additional = ticket.additional;
 
     var migrateInfo = function(oldUserId, newUserId) {
         var ref = firebaseUtil.ref('tickets', oldUserId),
             deferred = $q.defer();
-
-        console.log(newUserId);
 
         ref.once('value', function(snapshot) {
             var valueToMigrate = snapshot.val();
@@ -113,13 +123,12 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
                     delete ticketCopy.lastSubmittedStep;
 
                     submitTicket().then(function() {
+                        $scope.nextStep();
                         deferred.resolve();
                     });
                 } else {
                     deferred.resolve();
-                    $scope.$apply(function() {
-                        $scope.nextStep();
-                    });
+                    $scope.nextStep();
                 }
             }
         });

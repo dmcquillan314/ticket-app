@@ -85,15 +85,9 @@
 
 }
 
-.alert_container_content_heading_icon {
-    width: 2rem;
-    left: $global-padding;
-    position: absolute;
-    height:2rem;
-}
 
 .alert_container_content_heading_title {
-    padding-left: 2.4rem;
+    padding-left: 0;
     font-weight:$font-weight3;
 }
 
@@ -137,6 +131,3 @@
     color: $medium-dark-grey;
     font-size: 3.0rem;
 }
-
-@import "components/alert/alert-mobile";
-@import "components/alert/alert-tablet";

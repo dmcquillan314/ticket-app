@@ -66,22 +66,8 @@ angular.module('ticketApp')
                 templateUrl: 'views/ticket.html',
                 controller: 'TicketCtrl',
                 resolve: {
-                    ticket: [ '$q', 'authRequired', 'firebaseUtil', function($q, authRequired, firebaseUtil) {
-                        var deferred = $q.defer();
-
-                        authRequired().then(function(user) {
-                            var ref = firebaseUtil.ref('tickets', user.uid);
-
-                            ref.once('value', function(snapshot) {
-                                deferred.resolve(snapshot.val());
-                            },function(error) {
-                                if( error ) {
-                                    deferred.reject(error);
-                                }
-                            });
-                        });
-
-                        return deferred.promise;
+                    ticket: [ 'TicketService', function(TicketService) {
+                        return TicketService.retrieve();
                     }],
                     profile: [ '$q', 'authRequired', 'firebaseUtil', function($q, authRequired, firebaseUtil) {
                         var deferred = $q.defer();

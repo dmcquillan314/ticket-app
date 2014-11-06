@@ -51,6 +51,7 @@
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/ticket.js"></script>
     <script src="scripts/factories/image.js"></script>
+    <script src="scripts/factories/ticket.js"></script>
     <script src="scripts/directives/image.js"></script>
     <script src="scripts/directives/signature.js"></script>
     <script src="scripts/directives/ngShowHideAuth.js"></script>
@@ -66,10 +67,10 @@
     <div class="alert_container" ng-switch on="!! alert.templateUrl" ng-if="alert != null">
 
         <div class="alert_container_content" ng-switch-default>
-            <h2 class="alert_container_content_heading" ng-class=" alert.type === 'warning' ? 'alert_container_content_header--warning' : 'alert_container_content_header--error' ">
+            <h4 class="alert_container_content_heading" ng-class=" alert.type === 'warning' ? 'alert_container_content_header--warning' : 'alert_container_content_header--error' ">
                 <span class="alert_container_content_heading_title" ng-if="!! alert.processAsHTML" ng-bind-html="alert.header"></span>
                 <span class="alert_container_content_heading_title" ng-if="! alert.processAsHTML">{{ alert.header }}</span>
-            </h2>
+            </h4>
 
             <div class="alert_container_content_body">
                 <span ng-if="!! alert.processAsHTML" ng-bind-html="alert.body"></span>
@@ -98,7 +99,7 @@
 
 </div>
 <!-- Add your site or application content here -->
-<div class="scrollable">
+<div class="scrollable container-fluid">
     <div class="scrollable-content" ng-view="">
     </div>
 </div>

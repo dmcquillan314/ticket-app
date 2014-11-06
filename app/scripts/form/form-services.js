@@ -230,8 +230,8 @@ angular.module('form', [])
 
                 scope.getCssClasses = function(ngModelController) {
                     return {
-                        error: (ngModelController.$invalid || ngModelController.$customInvalid) && ( ( ngModelController.$dirty && ngModelController.$touched ) || ctrl.$submitted ),
-                        success: ngModelController.$valid && ngModelController.$customValid && ngModelController.$touched
+                        'has-error': (ngModelController.$invalid || ngModelController.$customInvalid) && ( ( ngModelController.$dirty && ngModelController.$touched ) || ctrl.$submitted ),
+                        'has-success': ngModelController.$valid && ngModelController.$customValid && ngModelController.$touched
                     };
                 };
 

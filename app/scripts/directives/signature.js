@@ -47,6 +47,7 @@ angular.module('signature', [])
 
                     if(formController) {
                         formController.$setViewValue(signaturePad.isEmpty() === false ? signaturePad.toDataURL() : undefined);
+                        formController.$validate();
                     }
                 }
             };

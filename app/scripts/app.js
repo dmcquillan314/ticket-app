@@ -15,6 +15,7 @@ angular
         'ngResource',
         'ngRoute',
         'ngSanitize',
+        'ngMessages',
         'ngTouch',
         'duScroll',
         'firebase.config',
