@@ -136,6 +136,8 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
         return deferred.promise;
     };
 
+    var pendingNewUser = null;
+
     var submitUserInformation = function(profile, id) {
         var ref = firebaseUtil.ref('users', id),
             deferred = $q.defer();
@@ -162,6 +164,11 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
                         $scope.$apply(function() {
                             $scope.nextStep();
+
+                            if(pendingNewUser !== null) {
+                                user = pendingNewUser;
+                                pendingNewUser = null;
+                            }
                         });
                     });
                 }, function(error) {
@@ -188,7 +195,7 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
                     authRequired().then(function(newUser) {
 
                         var oldUserId = user.uid;
-                        user = newUser;
+                        pendingNewUser = newUser;
 
                         $q.all([
                             migrateInfo(oldUserId, newUser.uid),

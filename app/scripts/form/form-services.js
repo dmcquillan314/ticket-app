@@ -290,5 +290,30 @@ angular.module('form', [])
             FormHelperService.createFormInputDirective(ctrl, element);
         }
     };
+}])
+
+.directive('match', [ function() {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        scope: {
+            match: '='
+        },
+        link: function(scope, element, attrs, ctrl) {
+            void(element,attrs,ctrl);
+
+            ctrl.$validators.match = function(value) {
+                value = value ? value.toLowerCase() : value;
+                var match = scope.match.$viewValue ? scope.match.$viewValue.toLowerCase() : undefined;
+                return value === match;
+            };
+
+            scope.$watch(function() {
+                return scope.match.$viewValue;
+            }, function() {
+                ctrl.$validate();
+            });
+        }
+    };
 }]);
 

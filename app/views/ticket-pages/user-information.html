@@ -1,6 +1,6 @@
 <form role="form" name="user-information" ng-submit="isAnonymous() ? createUser(profile) : submitUserInformation(profile)" novalidate>
     <label class="form-group" ng-if="isAnonymous()">
-        <p>email</p>
+        <p class="control-label">email</p>
         <input required name="email" type="email" ng-model="profile.email" class="form-control" />
     </label>
     <label class="form-group" ng-if="isAnonymous()">
