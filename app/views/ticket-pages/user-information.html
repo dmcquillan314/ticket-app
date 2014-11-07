@@ -1,52 +1,100 @@
-<form role="form" name="user-information" ng-submit="isAnonymous() ? createUser(profile) : submitUserInformation(profile)" novalidate>
-    <label class="form-group" ng-if="isAnonymous()">
-        <p class="control-label">email</p>
+<form role="form" name="userInformation" ng-submit="isAnonymous() ? createUser(profile, userInformation) : submitUserInformation(profile, userInformation)" novalidate>
+
+    <h2>User Information</h2>
+
+    <label class="form-group row col-xs-12" ng-if="isAnonymous()" ng-class="getCssClasses(userInformation.email)">
+        <p class="control-label">Email</p>
         <input required name="email" type="email" ng-model="profile.email" class="form-control" />
+
+        <p class="panel-collapse control-label row col-xs-12" ng-messages="userInformation.email.$error" collapse="! showClientValidationError(userInformation.email)">
+            <span class="col-xs-12 row" ng-message-when="required">Email is required</span>
+            <span class="col-xs-12 row" ng-message-when="email">Email is invalid</span>
+        </p>
+        <p class="panel-collapse control-label row col-xs-12" ng-messages="userInformation.email.$customError" collapse="! userInformation.email.$customInvalid">
+            <span class="col-xs-12 row" ng-message-when="EMAIL_TAKEN">The specified email address is already in use.</span>
+        </p>
     </label>
-    <label class="form-group" ng-if="isAnonymous()">
-        <p>password</p>
+    <label class="form-group row col-xs-12" ng-if="isAnonymous()" ng-class="getCssClasses(userInformation.pass)">
+        <p class="control-label">Password</p>
         <input required name="pass" type="password" ng-model="profile.pass" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.pass.$error" collapse="! showClientValidationError(userInformation.pass)">
+            <span class="col-xs-12 row" ng-message-when="required">Password is required</span>
+        </p>
     </label>
-    <label class="form-group" ng-if="isAnonymous()">
-        <p>confirm pass</p>
-        <input required name="confirm" type="password" ng-model="profile.confirm" class="form-control" />
+    <label class="form-group row col-xs-12" ng-if="isAnonymous()" ng-class="getCssClasses(userInformation.confirm)">
+        <p class="control-label">Confirm Password</p>
+        <input required match="userInformation.pass" name="confirm" type="password" ng-model="profile.confirm" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.confirm.$error" collapse="! showClientValidationError(userInformation.confirm)">
+            <span class="col-xs-12 row" ng-message-when="required">Password confirmation is required</span>
+            <span class="col-xs-12 row" ng-message-when="match">Passwords must match</span>
+        </p>
     </label>
 
-    <label class="form-group">
-        <p>First Name</p>
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.firstName)">
+        <p class="control-label">First Name</p>
         <input required name="firstName" type="text" ng-model="profile.firstName" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.firstName.$error" collapse="! showClientValidationError(userInformation.firstName)">
+            <span class="col-xs-12 row" ng-message-when="required">First name is required</span>
+        </p>
     </label>
-    <label class="form-group">
-        <p>Last Name</p>
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.lastName)">
+        <p class="control-label">Last Name</p>
         <input required name="lastName" type="text" ng-model="profile.lastName" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.lastName.$error" collapse="! showClientValidationError(userInformation.lastName)">
+            <span class="col-xs-12 row" ng-message-when="required">Last name is required</span>
+        </p>
     </label>
-    <label class="form-group">
-        <p>Address</p>
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.address)">
+        <p class="control-label">Address</p>
         <input required name="address" type="text" ng-model="profile.address" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.address.$error" collapse="! showClientValidationError(userInformation.address)">
+            <span class="col-xs-12 row" ng-message-when="required">Address is required</span>
+        </p>
     </label>
-    <label class="form-group">
-        <p>City</p>
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.city)">
+        <p class="control-label">City</p>
         <input required name="city" type="text" ng-model="profile.city" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.city.$error" collapse="! showClientValidationError(userInformation.city)">
+            <span class="col-xs-12 row" ng-message-when="required">City is required</span>
+        </p>
     </label>
-    <label class="form-group">
-        <p>State</p>
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.state)">
+        <p class="control-label">State</p>
         <input required name="state" type="text" ng-model="profile.state" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.state.$error" collapse="! showClientValidationError(userInformation.state)">
+            <span class="col-xs-12 row" ng-message-when="required">State is required</span>
+        </p>
     </label>
-    <label class="form-group">
-        <p>Zip</p>
-        <input required name="zip" type="text" ng-model="profile.zip" class="form-control" />
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.zip)">
+        <p class="control-label">Zip</p>
+        <input required name="zip" type="text" ng-minlength="5" pattern="[0-9]*" ng-maxlength="5" ng-pattern="/^\d{5}$/" maxlength="5" ng-model="profile.zip" class="form-control" />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.zip.$error" collapse="! showClientValidationError(userInformation.zip)">
+            <span class="col-xs-12 row" ng-message when="required">Zip code is required</span>
+            <span class="col-xs-12 row" ng-message when="pattern">Invalid zip code</span>
+        </p>
     </label>
-    <label class="form-group">
-        <p>Phone</p>
-        <input required name="phone" type="text" ng-model="profile.phone" class="form-control" />
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(userInformation.phone)">
+        <p class="control-label">Phone</p>
+        <input name="phone" ng-pattern="/^.*[1]?.*\d{3}.*\d{3}.*\d{4}.*$/" type="text" ng-model="profile.phone" class="form-control" required ng-maxlength="20" maxlength="20" ng-minlength="10" minlength="10" autocomplete="on"  />
+
+        <p class="panel-collapse control-label" ng-messages="userInformation.phone.$error" collapse="! showClientValidationError(userInformation.phone)">
+            <span class="col-xs-12 row" ng-message when="required">Phone number is missing</span>
+            <span class="col-xs-12 row" ng-message when="pattern">Phone number is invalid</span>
+            <span class="col-xs-12 row" ng-message when="maxlength">Phone number is too long</span>
+            <span class="col-xs-12 row" ng-message when="minlength">Phone number is too short</span>
+        </p>
     </label>
 
-    <p>
-        {{ error.message }}
-    </p>
-
-    <p>
-        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
-        <button  class="btn btn-primary" type="submit ">Next</button>
-    </p>
+    <div class="row col-xs-12">
+        <button  class="btn btn-default col-xs-4" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary col-xs-4 col-xs-push-4" type="submit ">Next</button>
+    </div>
 </form>

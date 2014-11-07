@@ -138,7 +138,9 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
     var pendingNewUser = null;
 
-    var submitUserInformation = function(profile, id) {
+    var submitUserInformation = function(profile, id, form) {
+        void(form);
+
         var ref = firebaseUtil.ref('users', id),
             deferred = $q.defer();
 
@@ -162,14 +164,12 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
                     submitTicket().then(function() {
                         deferred.resolve();
 
-                        $scope.$apply(function() {
-                            $scope.nextStep();
+                        $scope.nextStep();
 
-                            if(pendingNewUser !== null) {
-                                user = pendingNewUser;
-                                pendingNewUser = null;
-                            }
-                        });
+                        if(pendingNewUser !== null) {
+                            user = pendingNewUser;
+                            pendingNewUser = null;
+                        }
                     });
                 }, function(error) {
                     void(error);
@@ -181,35 +181,31 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
     $scope.submitTicket = submitTicket;
 
-    $scope.createUser = function(profile) {
-        $scope.error = null;
-        if( !profile.pass ) {
-            $scope.error = 'Please enter a password';
-        }
-        else if( profile.pass !== profile.confirm ) {
-            $scope.error = 'Passwords do not match';
-        }
-        else {
-            simpleLogin.createAccount(profile.email, profile.pass)
-                .then(function() {
-                    authRequired().then(function(newUser) {
+    $scope.createUser = function(profile, form) {
 
-                        var oldUserId = user.uid;
-                        pendingNewUser = newUser;
+        simpleLogin.createAccount(profile.email, profile.pass)
+            .then(function() {
+                authRequired().then(function(newUser) {
 
-                        $q.all([
-                            migrateInfo(oldUserId, newUser.uid),
-                            submitUserInformation(profile, newUser.uid)
-                        ]);
-                    });
-                }, function(error) {
-                    $scope.error = error;
+                    var oldUserId = user.uid;
+                    pendingNewUser = newUser;
+
+                    $q.all([
+                        migrateInfo(oldUserId, newUser.uid),
+                        submitUserInformation(profile, newUser.uid, form)
+                    ]);
                 });
-        }
+            }, function(error) {
+                form.resetCustomValidity();
+
+                if(error.code === 'EMAIL_TAKEN') {
+                    form.email.setCustomValidity(error.code, false);
+                }
+            });
     };
 
-    $scope.submitUserInformation = function(profile) {
-        submitUserInformation(profile, user.uid);
+    $scope.submitUserInformation = function(profile, form) {
+        submitUserInformation(profile, user.uid, form);
     };
 //
 //    $scope.submitAgreement = function(agreement) {
