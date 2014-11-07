@@ -1,0 +1,116 @@
+&.header--modal {
+    @include box-shadow(0 1px 2px rgba(0,0,0,0.3) );
+    position: absolute;
+    z-index: 102;
+    border-bottom: none;
+    
+    .navigation-bar {
+
+        &.left {
+           width: 20%;
+           position: absolute;
+           z-index: 1;
+        }
+        
+        &.middle {
+            
+            text-align: center;
+            width: 47%;
+
+            &.full-width {
+                width: 100%;
+                position: absolute;
+                left: 0;
+                line-height: $tablet-button-height-header;
+                font-size: 1.8rem;
+            }
+        }
+
+        &.right {
+           width: 30%;
+        }
+
+        &.summary {
+            float: right;
+
+            .button {
+                width: 9rem;
+                float: right;
+            }
+        }
+
+        .close-left,
+        .close-right {
+            .svg-icon-container {
+                &.svg-icon--button {
+                    height: 2.8rem;
+                    width: 2.8rem;
+                }
+            }
+        }
+
+    }
+    
+    .navigation-bar_item {
+
+        &.logo { 
+
+            img {
+                width:12.5rem;
+            }
+        }
+
+        &.close-left {
+            width: 4.5rem;
+            float:right;
+            height:$tablet-button-height-header;
+
+            .button_icon {
+
+                &:before {
+                    @include elegant-icon-font;
+                    position: relative;
+                    font-size: 2.7rem;
+                    content: "\34";
+                }
+            }
+        }
+
+        &.close-right {
+            width:4.5rem;
+            float:left;
+            height:$tablet-button-height-header;
+
+            .button_icon {
+
+                &:before {
+                    @include elegant-icon-font;
+                    position: relative;
+                    font-size: 2.7rem;
+                    content: "\35";
+                }
+            }
+        }
+
+        &.close {
+            height:$tablet-button-height-header;
+        }
+
+        &.home {
+            width:4.5rem;
+            float:left;
+
+            .button_icon {
+
+                &:before {
+                    @include elegant-icon-font;
+                    font-family: 'ElegantIcons';
+                    speak: none;
+                    content: "\e009";
+                    font-size: 1.9rem;
+                    
+                }
+            }
+        }
+    }
+}

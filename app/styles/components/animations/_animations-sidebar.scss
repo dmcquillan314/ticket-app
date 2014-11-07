@@ -1,0 +1,424 @@
+.slide-right,
+.slide-left,
+.slide-up,
+.slide-down,
+.slide-responsive {
+
+    @include backface-visibility( hidden );
+    @include transform( translate3d(0,0,0) );
+    @include perspective( 1000 );
+    // -webkit-animation-delay: 500ms;
+    // -moz-animation-delay: 500ms;
+    // -o-animation-delay: 500ms;
+    // -ms-animation-delay: 500ms;
+    // animation-delay: 500ms;
+    overflow: visible;
+    display: block !important;
+    opacity:1;
+
+    &.ng-hide {
+        z-index: -1;
+    }
+
+    &.ng-hide-add,
+    &.ng-hide-remove {
+        top: 0; right: 0; bottom: 0; left: 0;
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-overflow-scrolling: touch;
+        -moz-overflow-scrolling: touch;
+        -o-overflow-scrolling: touch;
+        -ms-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+
+    &.ng-hide-add,
+    &.ng-leave {
+        @include in-transition;
+    }
+
+    &.ng-hide-remove,
+    &.ng-enter {
+        @include out-transition;
+    }
+}
+
+.tablet {
+    .slide-responsive {
+        background: $white;
+
+        &.ng-leave {
+            z-index: 101;
+            @include transform( translate3D(0,0,0) );
+
+            &.ng-leave-active {
+                @include transform( translate3D(100%,0,0) );
+            }
+        }
+
+        &.ng-enter {
+            z-index: 100;
+            @include transform( translate3D(100%,0,0) );
+
+            &.ng-enter-active {
+                @include transform( translate3D(0,0,0) );
+            }
+        }
+    }
+}
+
+.mobile {
+    .slide-responsive {
+        background: $white;
+
+        &.ng-leave {
+            z-index: 101;
+            @include transform( translate3D(0,0,0) );
+
+            &.ng-leave-active {
+                @include transform( translate3D(0,100%,0) );
+            }
+        }
+
+        &.ng-enter {
+            z-index: 100;
+            @include transform( translate3D(0,100%,0) );
+
+            &.ng-enter-active {
+                @include transform( translate3D(0,0,0) );
+            }
+        }
+    }
+}
+
+.slide-right {
+
+    &.ng-leave {
+        z-index: 101;
+        @include transform( translateX(0) );
+
+        &.ng-leave-active {
+            @include transform( translate3D(-100%,0,0) );
+        }
+    }
+
+    &.ng-enter {
+        z-index: 100;
+        @include transform( translate3D(-100%,0,0) );
+
+        &.ng-enter-active {
+            @include transform( translate3D(0,0,0) );
+        }
+    }
+}
+
+.slide-up {
+    background: $white;
+
+    &.ng-leave {
+        z-index: 101;
+        @include transform( translate3D(0,0,0) );
+
+        &.ng-leave-active {
+            @include transform( translate3D(0,100%,0) );
+        }
+    }
+
+    &.ng-enter {
+        z-index: 100;
+        @include transform( translate3D(0,100%,0) );
+
+        &.ng-enter-active {
+            @include transform( translate3D(0,0,0) );
+        }
+    }
+}
+
+.slide-left {
+
+    &.ng-leave {
+        z-index: 101;
+        @include transform( translate3D(0,0,0) );
+
+        &.ng-leave-active {
+            @include transform( translate3D(100%,0,0) );
+        }
+    }
+
+    &.ng-enter {
+        z-index: 100;
+        @include transform( translate3D(100%,0,0) );
+
+        &.ng-enter-active {
+            @include transform( translate3D(0,0,0) );
+        }
+    }
+
+    &.ng-hide-add {
+        z-index: 101;
+        @include transform( translate3D(100%,0,0) );
+
+        &.ng-hide-add-active {
+            @include transform( translate3D(200%,0,0) );
+        }
+    }
+
+    &.ng-hide-remove {
+        z-index: 100;
+        @include transform( translate3D(200%,0,0) );
+
+        &.ng-hide-remove-active {
+            @include transform( translate3D(100%,0,0) );
+        }
+    }
+
+}
+
+.sub-view-animated-button {
+
+    &.ng-leave,
+    &.ng-enter {
+        @include in-transition;
+    }
+
+    &.ng-leave {
+        opacity: 1.0;
+
+        &.ng-leave-active {
+            opacity: 0.0;
+        }
+    }
+    &.ng-enter {
+        opacity: 0.0;
+
+        &.ng-enter-active {
+            opacity: 1.0;
+        }
+    }
+}
+
+.modal-sub-view-header-container {
+
+    .modal-sub-view-header {
+        @include in-transition;
+        position: absolute;
+        @extend %heading-width;
+    }
+
+    &.animate {
+
+        &.next {
+            .modal-sub-view-header {
+                &.ng-enter {
+                    @include transform( translateX( 40% ) );
+                    opacity: 0.0;
+                }
+                &.ng-enter.ng-enter-active {
+                    @include transform( translateX( 0% ) );
+                    opacity: 1.0;
+                }
+
+                &.ng-leave {
+                    @include transform( translateX(0%) );
+                    opacity: 1.0;
+
+                    &.ng-leave-active {
+                        @include transform( translateX(-25%));
+                        opacity: 0.0;
+                    }
+                }
+            }
+        }
+        &.prev {
+            .modal-sub-view-header {
+                &.ng-enter {
+                    @include transform( translateX(-25%) );
+                    opacity: 0.0;
+                }
+                &.ng-enter.ng-enter-active {
+                    @include transform( translateX(0%));
+                    opacity: 1.0;
+                }
+
+                &.ng-leave {
+                    @include transform( translateX( 0% ) );
+                    opacity: 1.0;
+
+                    &.ng-leave-active {
+                        @include transform( translateX( 40% ) );
+                        opacity: 0.0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal-sub-view-container {
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    position: absolute;
+    @include border-radius( 0 0 $large-border-radius $large-border-radius );
+
+    .modal-sub-view-animate {
+        background-color: $white;
+        overflow: visible;
+        display: block !important;
+        opacity:1;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        height: auto;
+        width: 100%;
+
+        &.ng-hide {
+            z-index: -1;
+        }
+
+        &.ng-hide-add,
+        &.ng-hide-remove,
+        &.ng-enter,
+        &.ng-leave {
+            @include backface-visibility( hidden );
+            @include perspective( 1000 );
+            @include transform( translate3d(0,0,0) );
+            top: 0; right: 0; bottom: 0; left: 0;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-overflow-scrolling: touch;
+            -moz-overflow-scrolling: touch;
+            -o-overflow-scrolling: touch;
+            -ms-overflow-scrolling: touch;
+            overflow-scrolling: touch;
+        }
+
+        &.ng-hide-add,
+        &.ng-leave {
+            @include in-transition;
+        }
+
+        &.ng-hide-remove,
+        &.ng-enter {
+            @include out-transition;
+        }
+    }
+
+    &.animate {
+
+        &.ng-hide-remove,
+        &.ng-enter {
+            @include out-transition;
+        }
+
+        &.ng-hide-add,
+        &.ng-leave {
+            @include in-transition;
+        }
+
+
+        &.prev {
+            .ng-hide-remove,
+            .ng-enter {
+
+                &.modal-sub-view-header,
+                &.modal-sub-view-animate, {
+
+                    &:after {
+                        @include in-transition;
+                        position: absolute;
+                        height: 100%;
+                        width: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        content: "";
+                        opacity: 1.0;
+                    }
+
+                    z-index: 100;
+                    @include transform(translateX(-30%));
+
+                    &.ng-hide-remove-active,
+                    &.ng-enter-active {
+                        @include transform(translateX(0%));
+
+                        &:after {
+                            opacity: 0.0;
+                        }
+                    }
+                }
+            }
+
+            .ng-hide-add,
+            .ng-leave {
+
+                &.modal-sub-view-header,
+                &.modal-sub-view-animate, {
+
+                    @include transform(translateX(0%));
+                    z-index: 101;
+
+                    &.ng-hide-add-active,
+                    &.ng-leave-active {
+                        @include transform(translateX(100%));
+                    }
+                }
+            }
+        }
+
+        &.next {
+            .ng-hide-remove,
+            .ng-enter  {
+
+                &.modal-sub-view-header,
+                &.modal-sub-view-animate, {
+                    z-index: 101;
+                    @include transform(translateX(100%));
+
+                    &.ng-hide-remove-active,
+                    &.ng-enter-active {
+                        @include transform(translateX(0%));
+                    }
+                }
+            }
+
+            .ng-hide-add,
+            .ng-leave {
+
+                &.modal-sub-view-header,
+                &.modal-sub-view-animate {
+                    z-index: 100;
+                    @include transform(translateX(0%));
+
+                    &:after {
+                        @include in-transition;
+                        position: absolute;
+                        height: 100%;
+                        width: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        content: "";
+                        opacity: 0.0;
+                    }
+
+                    &.ng-hide-add-active,
+                    &.ng-leave-active {
+                        @include transform(translate3d(-30%, 0, 0));
+
+                        &:after {
+                            opacity: 1.0;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+.mobile {
+    .modal-sub-view-container {
+        top:4.4rem;
+    }
+}
+.tablet {
+    .modal-sub-view-container {
+        top:6.4rem;
+    }
+}

@@ -1,0 +1,89 @@
+&.header--main {
+    @include box-shadow(0 1px 2px rgba(0,0,0,0.3) );
+    background: $lightest-grey;
+    z-index: 2;
+    border-bottom:4px solid $base-green;
+}
+
+.navigation-bar {
+    @include inline-block;
+    height: 100%;
+    position: relative;
+    width: 49%;
+    text-align: left;
+    float: left;
+
+    .button {
+        height: 100%;
+    }
+
+    &.search-section {
+        position: static;
+    }
+
+    &.left {
+        height: 100%;
+        width: 55%;
+    }
+    &.right {
+        width: 45%;
+        margin-right: 0;
+        text-align: right;
+    }
+
+    .navigation-bar_item {
+        @include inline-block;
+        position: relative;
+
+
+        &.logo {
+            vertical-align: middle;
+            *vertical-align: middle;
+            left: -10%;
+            top: 1px;
+
+            img {
+                vertical-align: middle;
+                *vertical-align: middle; 
+                max-width: 100px;
+                position: relative;
+                top: 2px;
+            }
+        }
+
+        &.search {
+            height: 100%;
+            width: 46px;
+
+            .button_icon {
+                font-size: 1.2em;
+                padding: 4px 3px 3px;
+            }
+        }
+
+        &.menu {
+            height: 100%;
+            width: 46px;
+            margin-right: 5px;
+
+            .button_icon {
+                font-size: 2.0em;
+                padding: 6px 3px 3px;
+            }
+        }
+
+        &.view-cart {
+            height: 100%;
+            margin-left: 5px;
+            padding: 6px 10px 6px 5px;
+            width: 120px;
+            position: relative;
+            text-align: right;
+
+            .button_icon {
+                position: absolute;
+                left: 5px;
+            }
+        }
+    }
+}

@@ -22,6 +22,7 @@ angular
         'firebase.utils',
         'firebase.auth.utils',
         'image',
+        'viewHelper',
         'signature',
         'alert',
         'form',

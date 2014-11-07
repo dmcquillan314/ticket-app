@@ -1,0 +1,122 @@
+.header {
+    @include span-columns-custom ( $total-columns, $total-columns, omega );
+    width: 100%;
+    display: block;
+    float: none;
+    background-color: $lightest-grey;
+    padding: $header-padding;
+    z-index: 1;
+    position: static;
+
+    &.header--main {
+        @include box-shadow(rgba(0,0,0,0.3) 0 1px 2px)
+    }
+
+    .button {
+        padding: 0;
+    }
+
+    .navigation-bar {
+
+        .navigation-bar_item {
+            display: inline-block;
+            zoom: 1;
+            position: relative;
+
+            &.menu {
+                padding: 0 $header-padding;
+                height: $desktop-button-height-header;
+            } 
+            
+            &.search {
+                width: 4.5rem;
+            }
+            
+            &.navigation-bar_item--title {
+                font-weight: $font-weight3;
+            }
+
+            /*
+            &.left {
+                 width:$desktop-button-height-header;
+                 height:$desktop-button-height-header;
+            }
+            */
+
+            &.view-cart {
+                margin-left: $global-padding / 2;
+                width: 5rem;
+                float: right;
+                font-size: 1.6rem;
+
+                .ball {
+                    content:"";
+                    height: 1rem;
+                    width: 1rem;
+                    background-color: $base-orange;
+                    top: -1rem;
+                    left: 1.9rem;
+                    z-index: 101;
+                    position: absolute;
+                    opacity: 0;
+                    border-radius: 1px;
+                }
+
+                .button_icon {
+                    width: 5rem;
+                    line-height: 4rem;
+
+                    /* &:before {
+                        @extend %header-text--bold;
+                    } */
+                }
+            }
+        }
+    }
+
+    .modal-sub-view-header {
+        font-size: $base-h2-size;
+        font-weight: $font-weight3;
+    }
+
+    &.header--dark-grey {
+        background-color: $darkest-grey;
+        border-bottom:none;
+    }
+
+    &.header--green {
+        background-color: $base-green;
+    }
+    
+    @import "components/header/header-modal";
+    @import "components/header/header-sub-nav";
+}
+.sidebar--right {
+    .header--modal {
+        .navigation-bar {
+            &.left {
+                width: 27%;
+                position: absolute;
+                z-index: 1;
+            }
+
+            &.middle {
+                position: absolute;
+                width: 100%;
+                font-weight: $font-weight3;
+            }
+
+            &.right { 
+                width:35%;
+                float: right;
+                text-align: right;
+            }
+        }
+    }
+}
+
+@import "components/header/header-buttons";
+@import "components/header/header-desktop";
+@import "components/header/header-tablet";
+@import "components/header/header-mobile";
+

@@ -1,24 +1,22 @@
-<form role="form" name="user-information" ng-submit="submitTicket()" novalidate>
+<form role="form" class="col-xs-12" name="user-information" ng-submit="submitTicket()" novalidate>
 
     <h2>Additional Information</h2>
 
-    <p>Photos</p>
-    <label class="form-group" ng-repeat="image in additional.images">
-        <input required name="photo" type="file" image-upload="image" class="form-control" />
-        <img style="max-height: 50px" ng-src="{{ image.data }}" alt="{{ ticket.number }}" />
+    <div class="row col-xs-12">
+        <label class="form-inline row col-xs-12" ng-repeat="image in additional.images">
+            <p ng-if="$index === 0" class="col-xs-12 row control-label">Photos <em class="text-muted">(Optional)</em></p>
+
+            <input required name="photo{{$index}}" type="file" image-upload="image" class="form-control" />
+        </label>
+    </div>
+
+    <label class="form-group row col-xs-12">
+        <p class="control-label col-xs-12 row">Comments <em class="text-muted">(Optional)</em></p>
+        <textarea name="comments" class="form-control col-xs-12" ng-model="additional.comments"></textarea>
     </label>
 
-    <label class="form-group">
-        <p>Comments</p>
-        <textarea name="comments" ng-model="additional.comments"></textarea>
-    </label>
-
-    <p>
-        {{ error.message }}
-    </p>
-
-    <p>
-        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
-        <button  class="btn btn-primary" type="submit ">Next</button>
-    </p>
+    <div class="row col-xs-12">
+        <button  class="btn btn-default col-xs-4" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary col-xs-4 col-xs-push-4" type="submit ">Next</button>
+    </div>
 </form>

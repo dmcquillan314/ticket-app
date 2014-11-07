@@ -1,0 +1,30 @@
+<header class="header header--modal">
+    <nav>
+        <div class="navigation-bar left logo-bar">
+            <a class="navigation-bar_item logo" ng-click="openNamedView('');go('/home')">
+                Ticket app
+            </a>
+        </div>
+        <div class="navigation-bar right">
+            <button class="navigation-bar_item close-left button button--light-grey button-expanded" ng-click="openNamedView('')">
+                Close
+            </button>
+        </div>
+    </nav>
+</header>
+
+<div class="scrollable scrollable-menu scrollable-with-top">
+    <div class="scrollable-content">
+        <ul class="menu-list menu-list--menu">
+            <li class="menu-list_item menu-list_item--icon-left menu-list_item--link">
+                <a ng-click="go('/')">Home</a>
+            </li>
+            <li class="menu-list_item menu-list_item--icon-left menu-list_item--link">
+                <a ng-click="go('/ticket')">Contest Ticket</a>
+            </li>
+            <li class="menu-list_item menu-list_item--icon-left menu-list_item--link">
+                <a ng-click="go('/')">View Ticket Warnings</a>
+            </li>
+        </ul>
+    </div>
+</div>

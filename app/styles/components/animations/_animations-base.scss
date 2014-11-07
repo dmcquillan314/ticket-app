@@ -1,0 +1,40 @@
+.panel-collapse {
+    overflow: hidden;
+
+    &.collapsing {
+        @include in-transition;
+        @include transition-property(height);
+    }
+}
+
+.animation-fade {
+    &.ng-enter {
+        @include in-transition;
+        @include transition-property(opacity);
+    }
+
+    &.ng-leave {
+        @include out-transition;
+        @include transition-property(opacity);
+    }
+
+    &.ng-enter {
+        opacity: 0.0;
+        z-index: 1;
+
+        &.ng-enter-active {
+            opacity: 1.0;
+        }
+    }
+
+    &.ng-leave {
+        opacity: 1.0;
+        z-index: 0;
+
+        &.ng-leave-active {
+            opacity: 0.0;
+        }
+    }
+}
+
+@import "animations-sidebar";

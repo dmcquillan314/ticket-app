@@ -1,0 +1,72 @@
+.header {
+    .close-right {
+
+        width: 4.5rem;
+
+        .button_icon {
+            &:before {
+                @include elegant-icon-font;
+                content: "\35";
+                font-size: 2.7rem;
+            }
+        }
+    }
+
+    .close {
+        width: 4.5rem;
+
+        .svg-icon-container {
+            &.svg-icon--button {
+                height: 2.6rem;
+                width: 2.6rem;
+                top: 0.3rem;
+            }
+        }
+
+    }
+
+    .close-left {
+        width: 4.5rem;
+    }
+
+    .home {
+        width: 4.5rem;
+
+        .button {
+            text-align: center;
+        }
+    }
+
+    .home,
+    .close-right,
+    .close-left,
+    .close {
+
+        .button {
+            padding: 0;
+        }
+
+        .button_icon {
+
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+    }
+
+    .order-status {
+        width: 12rem;
+        float: right;
+    }
+}
+
+.mobile {
+
+    .header {
+        .order-status {
+            height: $mobile-button-height-header;
+            line-height: $mobile-button-height-header;
+        }
+    }
+}

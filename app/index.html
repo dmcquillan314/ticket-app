@@ -39,6 +39,7 @@
     <script src="scripts/lib/angular-scroll.js"></script>
     <script src="scripts/lib/overthrow.js"></script>
     <script src="scripts/lib/ui-bootstrap-custom-tpls-0.10.0.js"></script>
+    <script src="scripts/view-helper/controllers/view-controller.js"></script>
     <script src="scripts/alert/alert-module.js"></script>
     <script src="scripts/alert/controllers/alert-controllers.js"></script>
     <script src="scripts/alert/directives/alert-directives.js"></script>
@@ -58,7 +59,7 @@
     <script src="scripts/routes.js"></script>
     <!-- endbuild -->
 </head>
-<body ng-app="ticketApp">
+<body ng-controller="viewHelperController" ng-app="ticketApp" class="mobile">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -98,6 +99,21 @@
     <div class="alert_mask mask mask--black" ng-if="isAlertPresent()"></div>
 
 </div>
+
+<aside class="sidebar sidebar--left sidebar--menu slide-right" ng-if="activeView == 'sidebarLeft'" role="navigation" aria-label="menu" tabindex="-1" >
+    <div ng-include="'views/modal/menu.html'"></div>
+</aside>
+
+<div class="mask mask--black" ng-click="openNamedView('')" ng-if="activeView != ''"></div>
+
+<header class="header header--main">
+    <nav>
+        <span class="navigation-bar left">
+            <button class="navigation-bar_item menu left button button--green button-expanded" role="button" aria-label="main menu" aria-haspopup="true" ng-click="openNamedView('sidebarLeft')">Menu</button>
+        </span>
+    </nav>
+</header>
+
 <!-- Add your site or application content here -->
 <div class="scrollable container-fluid">
     <div class="scrollable-content" ng-view="">

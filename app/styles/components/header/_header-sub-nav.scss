@@ -1,0 +1,22 @@
+&.header--sub-nav {
+    border-bottom:none;
+
+    .navigation-bar_item {
+        &.left {
+            width: 55%;
+            float: left;
+        }
+        &.right {
+            width: 45%;
+            float: right;
+        }
+        &.navigation-bar_item--title {
+            color: $white;
+        }
+    }
+
+    .navigation-bar--full-width {
+        position: relative;
+    }
+}
+

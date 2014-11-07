@@ -2,12 +2,16 @@
     position: absolute;
     width: 100%;
     height: auto;
-    top: 0;
+    top: $mobile-header-height + 0.2rem;
     bottom: 0;
     left: 0;
     right: 0;
     background-color: $white;
+
+    &.scrollable-menu {
+        background-color: $darkest-grey;
     }
+}
 
 .scrollable-content {
     width: 100%;

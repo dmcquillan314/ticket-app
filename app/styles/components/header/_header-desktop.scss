@@ -1,0 +1,91 @@
+.desktop {
+
+    .header {
+        height: $desktop-header-height;
+        padding: 1rem;
+        top: 0;
+
+        .navigation-bar {
+            height: $desktop-button-height-header;
+
+
+            &.left {
+                @include span-columns-custom ( 9, $total-columns );
+                margin:0;
+                width:78%;
+            }
+
+            &.right {
+                @include span-columns-custom ( 3, $total-columns, omega );
+                text-align: right;
+                width:22%;
+            }
+
+            .search-box {
+                position:relative;
+
+                .button {
+                    display: inline-block;
+                    width: 5rem;
+                    position: absolute;
+                    top:0;
+                    right:0;
+                    height: $desktop-button-height-header;
+                    float: right;
+                    @include border-radius(0 4px 4px 0);
+                    background-color:$base-green;
+
+                    &:before {
+                        @include elegant-icon-font;
+                        position:relative;
+                        font-size:1.9rem;
+                        content: "\55";
+                        color:$white;
+                    }
+                }
+                
+                input {
+                    height:$desktop-button-height-header;
+
+                }
+            }
+
+            .navigation-bar_item {
+                line-height:$desktop-button-height-header;
+
+                &.logo {
+                    width: 1.3rem;
+                }
+                &.navigation {
+                    font-size:1.8rem;
+                    line-height:$desktop-button-height-header;
+                    margin-left:1.5rem;
+                    cursor:pointer;
+                }
+                .button_icon {
+                    &:before {
+                        color:$medium-grey;
+                        line-height:$desktop-button-height-header;
+                    }
+                }
+                &.view-cart {
+                    margin-left:0;
+                    width:11rem;
+
+                    .button_icon {
+                        &:before {
+                            color:$white;
+                        }
+                    }
+                }
+                &.navigation_my-account {
+                    margin:0 1.5rem 0 0;
+                }
+                .subtotal {
+                    line-height:$desktop-button-height-header + 2;
+                }
+            }
+        }        
+    }
+}
+

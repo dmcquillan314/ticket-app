@@ -26,7 +26,7 @@
         </label>
     </div>
 
-    <div class="col-xs-offset-1 row col-xs-11" ng-if="ticket.reason.paymentMalfunction.flag">
+    <div class="col-xs-11 bg-info" ng-if="ticket.reason.paymentMalfunction.flag">
         <div class="checkbox">
             <label>
                 <input ng-model="ticket.reason.paymentMalfunction.meter.flag" name="paymentMalfunction" type="checkbox" value="true" />
@@ -34,14 +34,22 @@
             </label>
         </div>
         <div class="col-xs-offset-1" ng-if="ticket.reason.paymentMalfunction.meter.flag">
-            <label class="form-group">
-                <p>Meter id</p>
-                <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.id" class="form-control">
+            <label class="form-group" ng-class="getCssClasses(userInformation.meterId)">
+                <p class="control-label">Meter id</p>
+                <input type="text" name="meterId" required ng-model="ticket.reason.paymentMalfunction.meter.id" class="form-control">
+
+                <p class="panel-collapse control-label" ng-messages="userInformation.meterId.$error" collapse="! showClientValidationError(userInformation.meterId)">
+                    <span ng-message-when="required">Meter id not specified.</span>
+                </p>
             </label>
-            <label class="form-group">
-                <p>Call 888-888-8888 to report the meter and get a report confirmation number.</p>
-                <p>Report number</p>
-                <input type="text" ng-model="ticket.reason.paymentMalfunction.meter.reportNumber" class="form-control">
+            <label class="form-group" ng-class="getCssClasses(userInformation.reportNumber)">
+                <p class="control-label">Report number</p>
+                <input type="text" name="reportNumber" required ng-model="ticket.reason.paymentMalfunction.meter.reportNumber" class="form-control">
+                <p class="help-block">Call 888-888-8888 to report the meter and get a report confirmation number.</p>
+
+                <p class="panel-collapse control-label" ng-messages="userInformation.reportNumber.$error" collapse="! showClientValidationError(userInformation.reportNumber)">
+                    <span ng-message-when="required">Report number not specified.</span>
+                </p>
             </label>
         </div>
         <div class="checkbox">
@@ -86,10 +94,6 @@
             <span ng-message-when="required">You must specify an other reason</span>
         </p>
     </div>
-
-    <p>
-        {{ error.message }}
-    </p>
 
     <div class="row col-xs-12">
         <button  class="btn btn-default col-xs-4" ng-click="prevStep()" type="button">Prev</button>
