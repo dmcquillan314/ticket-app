@@ -207,15 +207,5 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
     $scope.submitUserInformation = function(profile, form) {
         submitUserInformation(profile, user.uid, form);
     };
-//
-//    $scope.submitAgreement = function(agreement) {
-//        var ref = firebaseUtil.ref('tickets', user.uid);
-//
-//        ref.child('agreeement').set(agreement, function(error) {
-//            if( error ) {
-//                $scope.error = 'Error uploading ticket information.';
-//            } else {
-//            }
-//        });
-//    };
+
 }]);
