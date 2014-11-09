@@ -1,49 +1,40 @@
-<div class="container" ng-cloak ng-show-auth>
-
-    <div class="col-xs-12 text-left row spacer-top-1">
-        <p>Welcome back, {{ profile.firstName ? profile.firstName : 'Guest' }}</p>
-    </div>
-
-    <div class="col-xs-12 row center-block spacer-1">
-        <button ng-click="go('/ticket')" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">Contest a Ticket</button>
-    </div>
-
-    <div class="col-xs-12 row center-block spacer-2">
-        <button ng-click="go('/parking-warnings')" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">Parking Warnings</button>
-    </div>
-
-    <div class="col-xs-12 row center-block spacer-2 text-center" ng-if="ticket !== null && ticket.lastSubmittedStep >= 0 && ticket.submitted != true">
-        <p class="col-xs-12 text-center spacer-1">You have an unfinished statement.</p>
-        <button ng-click="go('/ticket')" class="btn btn-primary spacer-1">Finish It</button>
-    </div>
-
-    <div class="col-xs-12 row center-block text-center">
-        <button role="button" ng-click="logout()" class="btn btn-sm btn-default">Log Out</button>
-    </div>
+<div class="col-xs-12 text-left row spacer-top-1" ng-show-auth>
+    <p>Welcome back, {{ profile.firstName ? profile.firstName : 'Guest' }}</p>
 </div>
 
-<div class="container" ng-cloak ng-hide-auth>
-    <h2>Login Page</h2>
-
-    <fieldset>
-        <legend>Oauth</legend>
-        <p>
-            <button  class="btn btn-primary" ng-click="oauthlogin('anonymous')">Anonymous</button>
-        </p>
-    </fieldset>
-
-    <form role="form">
-        <label class="form-group">
-            <p>email</p>
-            <input required name="email" type="email" ng-model="email" class="form-control" />
-        </label>
-        <label class="form-group">
-            <p>password</p>
-            <input required name="pass" type="password" ng-model="pass" class="form-control" />
-        </label>
-
-        <p>
-            <button  class="btn btn-primary" ng-click="passwordLogin(email, pass)">Log In</button>
-        </p>
-    </form>
+<div class="col-xs-12 row center-block spacer-1" ng-show-auth>
+    <button ng-click="go('/ticket')" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">Contest a Ticket</button>
 </div>
+
+<div class="col-xs-12 row center-block spacer-2" ng-show-auth>
+    <button ng-click="go('/parking-warnings')" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">Parking Warnings</button>
+</div>
+
+<div class="col-xs-12 row center-block spacer-2 text-center" ng-if="ticket !== null && ticket.lastSubmittedStep >= 0 && ticket.submitted != true" ng-show-auth>
+    <p class="col-xs-12 text-center spacer-1">You have an unfinished statement.</p>
+    <button ng-click="go('/ticket')" class="btn btn-primary spacer-1">Finish It</button>
+</div>
+
+<div class="col-xs-12 row center-block text-center" ng-show-auth>
+    <button role="button" ng-click="logout()" class="btn btn-sm btn-default">Log Out</button>
+</div>
+
+
+<fieldset class="row spacer-top-2 spacer-2" ng-hide-auth>
+    <button  class="btn btn-primary col-xs-12" ng-click="oauthlogin('anonymous')">New User</button>
+</fieldset>
+
+<form role="form" class="row" ng-hide-auth>
+    <label class="form-group col-xs-12">
+        <p class="control-label">email</p>
+        <input required name="email" type="email" ng-model="email" class="form-control col-xs-12" />
+    </label>
+    <label class="form-group col-xs-12">
+        <p class="control-label">password</p>
+        <input required name="pass" type="password" ng-model="pass" class="form-control col-xs-12" />
+    </label>
+
+    <div class="row">
+        <button  class="col-xs-12 btn btn-primary" ng-click="passwordLogin(email, pass)">Log In</button>
+    </div>
+</form>
