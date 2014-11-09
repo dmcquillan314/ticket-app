@@ -1,24 +1,24 @@
 /*! overthrow - An overflow:auto polyfill for responsive design. - v0.7.0 - 2014-07-15
 * Copyright (c) 2014 Scott Jehl, Filament Group, Inc.; Licensed MIT */
 /*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
-(function( w, undefined ){
+(function( w, undefined ){ 'use strict';
 	
 	var doc = w.document,
 		docElem = doc.documentElement,
-		enabledClassName = "overthrow-enabled",
+		enabledClassName = 'overthrow-enabled',
 
 		// Touch events are used in the polyfill, and thus are a prerequisite
-		canBeFilledWithPoly = "ontouchmove" in doc,
+		canBeFilledWithPoly = 'ontouchmove' in doc,
 		
 		// The following attempts to determine whether the browser has native overflow support
 		// so we can enable it but not polyfill
 		nativeOverflow = 
 			// Features-first. iOS5 overflow scrolling property check - no UA needed here. thanks Apple :)
-			"WebkitOverflowScrolling" in docElem.style ||
+			'WebkitOverflowScrolling' in docElem.style ||
 			// Test the windows scrolling property as well
-			"msOverflowStyle" in docElem.style ||
+			'msOverflowStyle' in docElem.style ||
 			// Touch events aren't supported and screen width is greater than X
-			// ...basically, this is a loose "desktop browser" check. 
+			// ...basically, this is a loose 'desktop browser' check.
 			// It may wrongly opt-in very large tablets with no touch support.
 			( !canBeFilledWithPoly && w.screen.width > 800 ) ||
 			// Hang on to your hats.
@@ -40,7 +40,7 @@
 					ua.match( / Version\/([0-9]+)/ ) && RegExp.$1 >= 0 && w.blackberry && wkLte534 ||
 					/* Blackberry Playbook with webkit gte 534
 					~: Mozilla/5.0 (PlayBook; U; RIM Tablet OS 1.0.0; en-US) AppleWebKit/534.8+ (KHTML, like Gecko) Version/0.0.1 Safari/534.8+ */   
-					ua.indexOf( "PlayBook" ) > -1 && wkLte534 && !ua.indexOf( "Android 2" ) === -1 ||
+					ua.indexOf( 'PlayBook' ) > -1 && wkLte534 && ua.indexOf( 'Android 2' ) !== -1 ||
 					/* Firefox Mobile (Fennec) 4 and up
 					~: Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0 */
 					ua.match(/Firefox\/([0-9]+)/) && RegExp.$1 >= 4 ||
@@ -61,12 +61,12 @@
 
 	w.overthrow.addClass = function(){
 		if( docElem.className.indexOf( w.overthrow.enabledClassName ) === -1 ){
-			docElem.className += " " + w.overthrow.enabledClassName;
+			docElem.className += ' ' + w.overthrow.enabledClassName;
 		}
 	};
 
 	w.overthrow.removeClass = function(){
-		docElem.className = docElem.className.replace( w.overthrow.enabledClassName, "" );
+		docElem.className = docElem.className.replace( w.overthrow.enabledClassName, '' );
 	};
 
 	// Enable and potentially polyfill overflow
@@ -90,12 +90,12 @@
 	};
 		
 	// Expose overthrow API
-	w.overthrow.support = nativeOverflow ? "native" : "none";
+	w.overthrow.support = nativeOverflow ? 'native' : 'none';
 		
 })( this );
 
 /*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
-(function( w, o, undefined ){
+(function( w, o, undefined ){ 'use strict';
 
 	// o is overthrow reference from overthrow-polyfill.js
 	if( o === undefined ){
@@ -119,8 +119,8 @@
 
 	// elem is the element to scroll
 	// options hash:
-		* left is the desired horizontal scroll. Default is "+0". For relative distances, pass a string with "+" or "-" in front.
-		* top is the desired vertical scroll. Default is "+0". For relative distances, pass a string with "+" or "-" in front.
+		* left is the desired horizontal scroll. Default is '+0'. For relative distances, pass a string with '+' or '-' in front.
+		* top is the desired vertical scroll. Default is '+0'. For relative distances, pass a string with '+' or '-' in front.
 		* duration is the number of milliseconds the throw will take. Default is 100.
 		* easing is an optional custom easing function. Default is w.overthrow.easing. Must follow the easing function signature
 
@@ -132,8 +132,8 @@
 			sTop = elem.scrollTop,
 			// Toss defaults
 			op = {
-				top: "+0",
-				left: "+0",
+				top: '+0',
+				left: '+0',
 				duration: 50,
 				easing: o.easing,
 				finished: function() {}
@@ -151,7 +151,7 @@
 
 		// Convert relative values to ints
 		// First the left val
-		if( typeof op.left === "string" ){
+		if( typeof op.left === 'string' ){
 			op.left = parseFloat( op.left );
 			endLeft = op.left + sLeft;
 		}
@@ -160,7 +160,7 @@
 			op.left = op.left - sLeft;
 		}
 		// Then the top val
-		if( typeof op.top === "string" ){
+		if( typeof op.top === 'string' ){
 
 			op.top = parseFloat( op.top );
 			endTop = op.top + sTop;
@@ -217,24 +217,26 @@
 })( this, this.overthrow );
 
 /*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
-(function( w, o, undefined ){
+(function( w, o, undefined ){ 'use strict';
 
 	// o is overthrow reference from overthrow-polyfill.js
 	if( o === undefined ){
 		return;
 	}
 
-	o.scrollIndicatorClassName = "overthrow";
+	o.scrollIndicatorClassName = 'overthrow';
 	
 	var doc = w.document,
 		docElem = doc.documentElement,
 		// o api
-		nativeOverflow = o.support === "native",
+		nativeOverflow = o.support === 'native',
 		canBeFilledWithPoly = o.canBeFilledWithPoly,
 		configure = o.configure,
 		set = o.set,
 		forget = o.forget,
 		scrollIndicatorClassName = o.scrollIndicatorClassName;
+
+    void(configure);
 
 	// find closest overthrow (elem or a parent)
 	o.closest = function( target, ascend ){
@@ -256,14 +258,14 @@
 
 		enabled = true;
 
-		o.support = "polyfilled";
+		o.support = 'polyfilled';
 
 		o.forget = function(){
 			forget();
 			enabled = false;
 			// Remove touch binding (check for method support since this part isn't qualified by touch support like the rest)
 			if( doc.removeEventListener ){
-				doc.removeEventListener( "touchstart", start, false );
+				doc.removeEventListener( 'touchstart', start, false );
 			}
 		};
 
@@ -301,7 +303,7 @@
 			// Thanks Thomas Bachem http://stackoverflow.com/a/5798681 for the following
 			inputs,
 			setPointers = function( val ){
-				inputs = elem.querySelectorAll( "textarea, input" );
+				inputs = elem.querySelectorAll( 'textarea, input' );
 				for( var i = 0, il = inputs.length; i < il; i++ ) {
 					inputs[ i ].style.pointerEvents = val;
 				}
@@ -314,8 +316,8 @@
 						tEnd;
 							
 					if( newTarget !== elem ){
-						tEnd = doc.createEvent( "HTMLEvents" );
-						tEnd.initEvent( "touchend", true, true );
+						tEnd = doc.createEvent( 'HTMLEvents' );
+						tEnd.initEvent( 'touchend', true, true );
 						elem.dispatchEvent( tEnd );
 						newTarget.touchchild = elem;
 						elem = newTarget;
@@ -344,7 +346,7 @@
 					return;
 				}			
 
-				setPointers( "none" );
+				setPointers( 'none' );
 				var touchStartE = e,
 					scrollT = elem.scrollTop,
 					scrollL = elem.scrollLeft,
@@ -403,28 +405,29 @@
 				
 					// Touchend handler
 					end = function( e ){
+                        void(e);
 
 						// Bring the pointers back
-						setPointers( "auto" );
+						setPointers( 'auto' );
 						setTimeout( function(){
-							setPointers( "none" );
+							setPointers( 'none' );
 						}, 450 );
-						elem.removeEventListener( "touchmove", move, false );
-						elem.removeEventListener( "touchend", end, false );
+						elem.removeEventListener( 'touchmove', move, false );
+						elem.removeEventListener( 'touchend', end, false );
 					};
 				
-				elem.addEventListener( "touchmove", move, false );
-				elem.addEventListener( "touchend", end, false );
+				elem.addEventListener( 'touchmove', move, false );
+				elem.addEventListener( 'touchend', end, false );
 			};
 			
 		// Bind to touch, handle move and end within
-		doc.addEventListener( "touchstart", start, false );
+		doc.addEventListener( 'touchstart', start, false );
 	};
 		
 })( this, this.overthrow );
 
 /*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
-(function( w, undefined ){
+(function( w, undefined ){ 'use strict';
 	
 	// Auto-init
 	w.overthrow.set();

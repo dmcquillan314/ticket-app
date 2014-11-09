@@ -90,13 +90,13 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
             ref = firebaseUtil.ref('tickets', newUserId);
             ref.set(valueToMigrate, function(err) {
                 if(err) {
-                    console.log('error migrating user', err);
+                    deferred.reject(err);
                 } else {
                     deferred.resolve();
                 }
             });
         }, function(error) {
-            console.log(error);
+            deferred.reject(error);
         });
 
         return deferred.promise;
@@ -115,21 +115,9 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
         ref.set(ticketCopy, function(error) {
             if( error ) {
-                $scope.error = 'Error uploading ticket information.';
+                deferred.reject(error);
             } else {
-
-                if(steps[curStep] === 'agreement' ) {
-                    ticketCopy.submitted = true;
-                    delete ticketCopy.lastSubmittedStep;
-
-                    submitTicket().then(function() {
-                        $scope.nextStep();
-                        deferred.resolve();
-                    });
-                } else {
-                    deferred.resolve();
-                    $scope.nextStep();
-                }
+                deferred.resolve(ticketCopy);
             }
         });
 
@@ -164,22 +152,34 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
                     submitTicket().then(function() {
                         deferred.resolve();
 
-                        $scope.nextStep();
-
                         if(pendingNewUser !== null) {
                             user = pendingNewUser;
                             pendingNewUser = null;
                         }
                     });
                 }, function(error) {
-                    void(error);
+                    deferred.reject(error);
                 });
             }
         });
 
+        return deferred.promise;
     };
 
-    $scope.submitTicket = submitTicket;
+    $scope.submitTicket = function() {
+        submitTicket().then(function() {
+            if(steps[curStep] === 'agreement') {
+                ticket.submitted = true;
+                delete ticket.lastSubmittedStep;
+
+                submitTicket().then(function() {
+                    $scope.nextStep();
+                });
+            } else {
+                $scope.nextStep();
+            }
+        });
+    };
 
     $scope.createUser = function(profile, form) {
 
@@ -193,7 +193,9 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
                     $q.all([
                         migrateInfo(oldUserId, newUser.uid),
                         submitUserInformation(profile, newUser.uid, form)
-                    ]);
+                    ]).then(function() {
+                        $scope.nextStep();
+                    });
                 });
             }, function(error) {
                 form.resetCustomValidity();
@@ -205,7 +207,9 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
     };
 
     $scope.submitUserInformation = function(profile, form) {
-        submitUserInformation(profile, user.uid, form);
+        submitUserInformation(profile, user.uid, form).then(function() {
+            $scope.nextStep();
+        });
     };
 
 }]);

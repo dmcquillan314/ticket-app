@@ -60,7 +60,9 @@ angular.module('ticketApp')
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                resolve: {
+                }
             })
             .whenAuthenticated('/ticket', {
                 templateUrl: 'views/ticket.html',

@@ -1,11 +1,25 @@
 <div class="container" ng-cloak ng-show-auth>
-    <p>
-        <a href="#/ticket" class="btn btn-danger">Ticket</a>
-    </p>
 
-    <p>
-        <button role="button" ng-click="logout()" class="btn btn-danger">Log Out</button>
-    </p>
+    <div class="col-xs-12 text-left row spacer-top-1">
+        <p>Welcome back, {{ profile.firstName ? profile.firstName : 'Guest' }}</p>
+    </div>
+
+    <div class="col-xs-12 row center-block spacer-1">
+        <button ng-click="go('/ticket')" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">Contest a Ticket</button>
+    </div>
+
+    <div class="col-xs-12 row center-block spacer-2">
+        <button ng-click="go('/parking-warnings')" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">Parking Warnings</button>
+    </div>
+
+    <div class="col-xs-12 row center-block spacer-2 text-center" ng-if="ticket !== null && ticket.lastSubmittedStep >= 0 && ticket.submitted != true">
+        <p class="col-xs-12 text-center spacer-1">You have an unfinished statement.</p>
+        <button ng-click="go('/ticket')" class="btn btn-primary spacer-1">Finish It</button>
+    </div>
+
+    <div class="col-xs-12 row center-block text-center">
+        <button role="button" ng-click="logout()" class="btn btn-sm btn-default">Log Out</button>
+    </div>
 </div>
 
 <div class="container" ng-cloak ng-hide-auth>

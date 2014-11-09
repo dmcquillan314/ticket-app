@@ -21,15 +21,16 @@ angular.module('duScroll.scrollHelpers', ['duScroll.requestAnimation']).run([
         'use strict';
         var proto = angular.element.prototype;
         var isDocument = function (el) {
-            return typeof HTMLDocument !== 'undefined' && el instanceof HTMLDocument || el.nodeType && el.nodeType === el.DOCUMENT_NODE;
+            return typeof window.HTMLDocument !== 'undefined' && el instanceof window.HTMLDocument || el.nodeType && el.nodeType === el.DOCUMENT_NODE;
         };
         var isElement = function (el) {
-            return typeof HTMLElement !== 'undefined' && el instanceof HTMLElement || el.nodeType && el.nodeType === el.ELEMENT_NODE;
+            return typeof window.HTMLElement !== 'undefined' && el instanceof window.HTMLElement || el.nodeType && el.nodeType === el.ELEMENT_NODE;
         };
         var unwrap = function (el) {
             return isElement(el) || isDocument(el) ? el : el[0];
         };
         proto.scrollTo = function (left, top, duration, easing) {
+            void(easing);
             var aliasFn;
             if (angular.isElement(left)) {
                 aliasFn = this.scrollToElement;
@@ -125,6 +126,7 @@ angular.module('duScroll.scrollHelpers', ['duScroll.requestAnimation']).run([
         //Add duration and easing functionality to existing jQuery getter/setters
         var overloadScrollPos = function (superFn, overloadFn) {
             return function (value, duration, easing) {
+                void(easing);
                 if (duration) {
                     return overloadFn.apply(this, arguments);
                 }
@@ -168,7 +170,7 @@ angular.module('duScroll.requestAnimation', ['duScroll.polyfill']).factory('requ
     function (polyfill, $timeout) {
         'use strict';
         var lastTime = 0;
-        var fallback = function (callback, element) {
+        var fallback = function (callback) {
             var currTime = new Date().getTime();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
             var id = $timeout(function () {

@@ -5,8 +5,8 @@
  * Version: 0.10.0 - 2014-02-21
  * License: MIT
  */
-angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.transition","ui.bootstrap.collapse","ui.bootstrap.modal"]);
-angular.module("ui.bootstrap.tpls", ["template/modal/backdrop.html","template/modal/window.html"]);
+angular.module('ui.bootstrap', ['ui.bootstrap.tpls', 'ui.bootstrap.transition','ui.bootstrap.collapse','ui.bootstrap.modal']);
+angular.module('ui.bootstrap.tpls', ['template/modal/backdrop.html','template/modal/window.html']);
 angular.module('ui.bootstrap.transition', [])
 
 /**
@@ -18,14 +18,15 @@ angular.module('ui.bootstrap.transition', [])
  *   - As a function, it represents a function to be called that will cause the transition to occur.
  * @return {Promise}  A promise that is resolved when the transition finishes.
  */
-.factory('$transition', ['$q', '$timeout', '$rootScope', function($q, $timeout, $rootScope) {
+.factory('$transition', ['$q', '$timeout', '$rootScope', function($q, $timeout, $rootScope) { 'use strict';
 
   var $transition = function(element, trigger, options) {
     options = options || {};
     var deferred = $q.defer();
-    var endEventName = $transition[options.animation ? "animationEndEventName" : "transitionEndEventName"];
+    var endEventName = $transition[options.animation ? 'animationEndEventName' : 'transitionEndEventName'];
 
     var transitionEndHandler = function(event) {
+        void(event);
       $rootScope.$apply(function() {
         element.unbind(endEventName, transitionEndHandler);
         deferred.resolve(element);
@@ -92,7 +93,8 @@ angular.module('ui.bootstrap.transition', [])
 
 angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
 
-  .directive('collapse', ['$transition', function ($transition, $timeout) {
+  .directive('collapse', ['$transition', function ($transition, $timeout) { 'use strict';
+        void($timeout);
 
     return {
       link: function (scope, element, attrs) {
@@ -143,6 +145,7 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
             element.css({ height: element[0].scrollHeight + 'px' });
             //trigger reflow so a browser realizes that height was updated from auto to a specific value
             var x = element[0].offsetWidth;
+              void(x);
 
             element.removeClass('collapse in').addClass('collapsing');
 
@@ -172,7 +175,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
  * A helper, internal data structure that acts as a map but also allows getting / removing
  * elements in the LIFO order
  */
-  .factory('$$stackedMap', function () {
+  .factory('$$stackedMap', function () { 'use strict';
     return {
       createNew: function () {
         var stack = [];
@@ -186,7 +189,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
           },
           get: function (key) {
             for (var i = 0; i < stack.length; i++) {
-              if (key == stack[i].key) {
+              if (key === stack[i].key) {
                 return stack[i];
               }
             }
@@ -204,7 +207,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
           remove: function (key) {
             var idx = -1;
             for (var i = 0; i < stack.length; i++) {
-              if (key == stack[i].key) {
+              if (key === stack[i].key) {
                 idx = i;
                 break;
               }
@@ -225,7 +228,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 /**
  * A helper directive for the $modal service. It creates a backdrop element.
  */
-  .directive('modalBackdrop', ['$timeout', function ($timeout) {
+  .directive('modalBackdrop', ['$timeout', function ($timeout) { 'use strict';
     return {
       restrict: 'EA',
       replace: true,
@@ -242,7 +245,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
     };
   }])
 
-  .directive('modalWindow', ['$modalStack', '$timeout', function ($modalStack, $timeout) {
+  .directive('modalWindow', ['$modalStack', '$timeout', function ($modalStack, $timeout) { 'use strict';
     return {
       restrict: 'EA',
       scope: {
@@ -264,7 +267,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
         scope.close = function (evt) {
           var modal = $modalStack.getTop();
-          if (modal && modal.value.backdrop && modal.value.backdrop != 'static' && (evt.target === evt.currentTarget)) {
+          if (modal && modal.value.backdrop && modal.value.backdrop !== 'static' && (evt.target === evt.currentTarget)) {
             evt.preventDefault();
             evt.stopPropagation();
             $modalStack.dismiss(modal.key, 'backdrop click');
@@ -275,7 +278,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
   }])
 
   .factory('$modalStack', ['$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
-    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
+    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap) { 'use strict';
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
@@ -315,7 +318,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
       function checkRemoveBackdrop() {
           //remove backdrop if no longer needed
-          if (backdropDomEl && backdropIndex() == -1) {
+          if (backdropDomEl && backdropIndex() === -1) {
             var backdropScopeRef = backdropScope;
             removeAfterAnimate(backdropDomEl, backdropScope, 150, function () {
               backdropScopeRef.$destroy();
@@ -433,7 +436,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
       return $modalStack;
     }])
 
-  .provider('$modal', function () {
+  .provider('$modal', function () { 'use strict';
 
     var $modalProvider = {
       options: {
@@ -454,7 +457,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
           function getResolvePromises(resolves) {
             var promisesArr = [];
-            angular.forEach(resolves, function (value, key) {
+            angular.forEach(resolves, function (value) {
               if (angular.isFunction(value) || angular.isArray(value)) {
                 promisesArr.push($q.when($injector.invoke(value)));
               }
@@ -541,14 +544,14 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
     return $modalProvider;
   });
 
-angular.module("template/modal/backdrop.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/modal/backdrop.html",
-    "<div class=\"modal-backdrop fade\" ng-class=\"{in: animate}\" ng-style=\"{'z-index': 1040 + index*10}\"></div>");
+angular.module('template/modal/backdrop.html', []).run(['$templateCache', function($templateCache) { 'use strict';
+  $templateCache.put('template/modal/backdrop.html',
+    '<div class=\"modal-backdrop fade\" ng-class=\"{in: animate}\" ng-style=\"{\'z-index\': 1040 + index*10}\"></div>');
 }]);
 
-angular.module("template/modal/window.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/modal/window.html",
-    "<div tabindex=\"-1\" class=\"modal fade {{ windowClass }}\" ng-class=\"{in: animate}\" ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\" ng-click=\"close($event)\">\n" +
-    "    <div class=\"modal-dialog\"><div class=\"modal-content\" ng-transclude></div></div>\n" +
-    "</div>");
+angular.module('template/modal/window.html', []).run(['$templateCache', function($templateCache) { 'use strict';
+  $templateCache.put('template/modal/window.html',
+    '<div tabindex=\"-1\" class=\"modal fade {{ windowClass }}\" ng-class=\"{in: animate}\" ng-style=\"{\'z-index\': 1050 + index*10, display: \'block\'}\" ng-click=\"close($event)\">\n' +
+    '    <div class=\"modal-dialog\"><div class=\"modal-content\" ng-transclude></div></div>\n' +
+    '</div>');
 }]);

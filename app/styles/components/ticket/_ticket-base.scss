@@ -1,0 +1,19 @@
+.submission-agreement-form {
+    .signature-pad {
+        @include inline-block;
+        width: 100%;
+    }
+
+    .signature-pad_body {
+        width: 100%;
+        margin: $global-padding 0;
+        padding:0 0.1rem;
+    }
+
+    .signature-pad_body_canvas {
+        width: 100%;
+        margin: 0 0.1rem;
+        border: 1px solid $light-grey;
+        @include border-radius($standard-border-radius);
+    }
+}
