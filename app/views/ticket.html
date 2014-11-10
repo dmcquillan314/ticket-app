@@ -14,6 +14,9 @@
     <div class="submission-agreement-form" ng-switch-when="agreement">
         <div ng-include="'views/ticket-pages/submission-agreement.html'"></div>
     </div>
+    <div class="summary" ng-switch-when="summary">
+        <div ng-include="'views/ticket-pages/ticket-summary.html'"></div>
+    </div>
     <div class="confirmation" ng-switch-when="confirmation">
         <div ng-include="'views/ticket-pages/confirmation.html'"></div>
     </div>

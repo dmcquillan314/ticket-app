@@ -10,6 +10,7 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
         'additional-information',
         'user-information',
         'agreement',
+        'summary',
         'confirmation'
     ];
 
@@ -159,7 +160,7 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
     $scope.submitTicket = function() {
         submitTicket().then(function() {
-            if(steps[curStep] === 'agreement') {
+            if(steps[curStep] === 'summary') {
                 ticket.submitted = true;
                 delete ticket.lastSubmittedStep;
 

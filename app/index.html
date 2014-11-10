@@ -104,6 +104,10 @@
     <div ng-include="'views/modal/menu.html'"></div>
 </aside>
 
+<aside class="sidebar sidebar--modal slide-up" role="navigation" tabindex="-1" ng-if="activeView == 'terms'">
+    <div ng-include="'views/modal/terms.html'"></div>
+</aside>
+
 <div class="mask mask--black" ng-click="openNamedView('')" ng-if="activeView != ''"></div>
 
 <header class="header header--main">
