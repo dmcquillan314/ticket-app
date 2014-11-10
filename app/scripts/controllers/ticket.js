@@ -132,8 +132,7 @@ function($q, $scope, $location, user, tickets, profile, simpleLogin, firebaseUti
     };
 
     var submitTicket = function() {
-        var ref = firebaseUtil.ref('tickets', user.uid),
-            deferred = $q.defer();
+        var deferred = $q.defer();
 
         // copying will remove angular properties
         var ticketCopy = angular.copy(ticket);
@@ -148,6 +147,7 @@ function($q, $scope, $location, user, tickets, profile, simpleLogin, firebaseUti
             tickets[ticketIndex] = ticketCopy;
         }
 
+        var ref = firebaseUtil.ref('tickets', user.uid);
         ref.set(tickets, function(error) {
             if( error ) {
                 deferred.reject(error);
@@ -161,11 +161,10 @@ function($q, $scope, $location, user, tickets, profile, simpleLogin, firebaseUti
 
     var pendingNewUser = null;
 
-    var submitUserInformation = function(profile, id, form, submitTicket) {
+    var submitUserInformation = function(profile, id, form, shouldSubmitTicket) {
         void(form);
 
-        var ref = firebaseUtil.ref('users', id),
-            deferred = $q.defer();
+        var deferred = $q.defer();
 
         var userInformation = {
             firstName: profile.firstName,
@@ -177,11 +176,13 @@ function($q, $scope, $location, user, tickets, profile, simpleLogin, firebaseUti
             phone: profile.phone
         };
 
+        var ref = firebaseUtil.ref('users', id);
+
         ref.update(userInformation, function(err) {
             if( err ) {
                 deferred.reject(err);
             } else {
-                if(submitTicket) {
+                if(shouldSubmitTicket) {
                     submitTicket().then(function() {
                         deferred.resolve();
                     }).catch(function() {
