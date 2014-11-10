@@ -7,9 +7,10 @@
  * Manages authentication to any active providers.
  */
 angular.module('ticketApp')
-    .controller('MainCtrl', [ '$scope', 'simpleLogin', '$location', function ($scope, simpleLogin, $location) {
+    .controller('MainCtrl', [ '$scope', 'ticket', 'simpleLogin', '$location', function ($scope, ticket, simpleLogin, $location) {
 
         $scope.logout = simpleLogin.logout;
+        $scope.ticket = ticket;
 
         $scope.oauthlogin = function(provider) {
             login(provider, {

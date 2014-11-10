@@ -1,5 +1,5 @@
 <div class="col-xs-12 text-left row spacer-top-1" ng-show-auth>
-    <p>Welcome back, {{ profile.firstName ? profile.firstName : 'Guest' }}</p>
+    <p>{{ profile.firstName ? 'Welcome back, ' + profile.firstName : '' }}</p>
 </div>
 
 <div class="col-xs-12 row center-block spacer-1" ng-show-auth>
