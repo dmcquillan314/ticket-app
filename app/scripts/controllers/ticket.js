@@ -1,7 +1,7 @@
 angular.module('ticketApp')
 
-.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'ticket', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired', 'TicketService',
-function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil, authRequired, TicketService) {
+.controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'tickets', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired', 'TicketService',
+function($q, $scope, $location, user, tickets, profile, simpleLogin, firebaseUtil, authRequired, TicketService) {
     'use strict';
 
     var steps = [
@@ -14,7 +14,25 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
         'confirmation'
     ];
 
+    tickets = tickets || [];
+
+    var ticket = null,
+        ticketIndex = null;
+
     var setup = function() {
+
+        var filteredTickets = _.filter(tickets, function(ticket) {
+            return typeof ticket.submitted === 'undefined' && ticket.submitted !== true;
+        });
+
+        if( filteredTickets.length > 0 ) {
+            ticket = filteredTickets[filteredTickets.length - 1];
+            var index = _.indexOf(tickets, ticket);
+            if(index !== -1 ) {
+                ticketIndex = index;
+            }
+        }
+
         if(ticket === null) {
             ticket = {};
         }
@@ -48,6 +66,8 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
         return user.provider === 'anonymous';
     };
 
+    setup();
+
     var isNotStepping = true,
         curStep = ticket !== null && typeof ticket.lastSubmittedStep !== 'undefined' && angular.isNumber(ticket.lastSubmittedStep) ?
             ( ticket.lastSubmittedStep + 1 < steps.length ? ticket.lastSubmittedStep + 1 : steps.length - 1 )
@@ -56,28 +76,34 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
     $scope.step = steps[curStep];
 
-    setup();
-
     $scope.prevStep = function() {
+        var deferred = $q.defer();
         if(isNotStepping && curStep > 0) {
-            TicketService.retrieve().then(function(ticketObject) {
-                ticket = ticketObject;
+            return TicketService.retrieve().then(function(ticketsArray) {
+                tickets = ticketsArray;
                 setup();
                 curStep--;
                 $scope.step = steps[curStep];
+
+                return;
             });
         }
+        deferred.resolve();
+        return deferred.promise;
     };
 
     $scope.nextStep = function() {
+        var deferred = $q.defer();
         if(isNotStepping && curStep < steps.length) {
-            TicketService.retrieve().then(function(ticketObject) {
-                ticket = ticketObject;
+            TicketService.retrieve().then(function(ticketsArray) {
+                tickets = ticketsArray;
                 setup();
                 curStep++;
                 $scope.step = steps[curStep];
             });
         }
+        deferred.resolve();
+        return deferred.promise;
     };
 
     var migrateInfo = function(oldUserId, newUserId) {
@@ -86,15 +112,17 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
         ref.once('value', function(snapshot) {
             var valueToMigrate = snapshot.val();
+            ref = firebaseUtil.ref('tickets', oldUserId);
 
-            ref.remove();
-            ref = firebaseUtil.ref('tickets', newUserId);
-            ref.set(valueToMigrate, function(err) {
-                if(err) {
-                    deferred.reject(err);
-                } else {
-                    deferred.resolve();
-                }
+            ref.remove(function() {
+                var updateRef = firebaseUtil.ref('tickets', newUserId);
+                updateRef.set(valueToMigrate, function(err) {
+                    if(err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve();
+                    }
+                });
             });
         }, function(error) {
             deferred.reject(error);
@@ -114,11 +142,17 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
             ticketCopy.lastSubmittedStep = curStep;
         }
 
-        ref.set(ticketCopy, function(error) {
+        if(ticketIndex === null) {
+            tickets.push(ticketCopy);
+        } else {
+            tickets[ticketIndex] = ticketCopy;
+        }
+
+        ref.set(tickets, function(error) {
             if( error ) {
                 deferred.reject(error);
             } else {
-                deferred.resolve(ticketCopy);
+                deferred.resolve(tickets);
             }
         });
 
@@ -127,7 +161,7 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
     var pendingNewUser = null;
 
-    var submitUserInformation = function(profile, id, form) {
+    var submitUserInformation = function(profile, id, form, submitTicket) {
         void(form);
 
         var ref = firebaseUtil.ref('users', id),
@@ -147,11 +181,15 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
             if( err ) {
                 deferred.reject(err);
             } else {
-                submitTicket().then(function() {
+                if(submitTicket) {
+                    submitTicket().then(function() {
+                        deferred.resolve();
+                    }).catch(function() {
+                        deferred.reject();
+                    });
+                } else {
                     deferred.resolve();
-                }).catch(function() {
-                    deferred.reject();
-                });
+                }
             }
         });
 
@@ -184,9 +222,11 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
 
                     $q.all([
                         migrateInfo(oldUserId, newUser.uid),
-                        submitUserInformation(profile, newUser.uid, form)
+                        submitUserInformation(profile, newUser.uid, form, false)
                     ]).then(function() {
-                        $scope.nextStep();
+                        $scope.nextStep().then(function() {
+                            user = pendingNewUser;
+                        });
                     });
                 });
             }, function(error) {
@@ -199,7 +239,7 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
     };
 
     $scope.submitUserInformation = function(profile, form) {
-        submitUserInformation(profile, user.uid, form).then(function() {
+        submitUserInformation(profile, user.uid, form, true).then(function() {
             $scope.nextStep();
         });
     };

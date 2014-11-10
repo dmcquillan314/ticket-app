@@ -78,7 +78,7 @@ angular.module('ticketApp')
                 templateUrl: 'views/ticket.html',
                 controller: 'TicketCtrl',
                 resolve: {
-                    ticket: [ 'TicketService', function(TicketService) {
+                    tickets: [ 'TicketService', function(TicketService) {
                         return TicketService.retrieve();
                     }],
                     profile: [ '$q', 'authRequired', 'firebaseUtil', function($q, authRequired, firebaseUtil) {
