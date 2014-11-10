@@ -146,19 +146,10 @@ function($q, $scope, $location, user, ticket, profile, simpleLogin, firebaseUtil
             if( err ) {
                 deferred.reject(err);
             } else {
-                ref.once('value', function(snapshot) {
-                    angular.extend($scope.profile, snapshot.val());
-
-                    submitTicket().then(function() {
-                        deferred.resolve();
-
-                        if(pendingNewUser !== null) {
-                            user = pendingNewUser;
-                            pendingNewUser = null;
-                        }
-                    });
-                }, function(error) {
-                    deferred.reject(error);
+                submitTicket().then(function() {
+                    deferred.resolve();
+                }).catch(function() {
+                    deferred.reject();
                 });
             }
         });
