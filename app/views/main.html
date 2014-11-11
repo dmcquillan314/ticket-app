@@ -10,7 +10,7 @@
     <button ng-click="go('/parking-warnings')" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">Parking Warnings</button>
 </div>
 
-<div class="col-xs-12 row center-block spacer-2 text-center" ng-if="ticket !== null && ticket.lastSubmittedStep >= 0 && ticket.submitted != true" ng-show-auth>
+<div class="col-xs-12 row center-block spacer-2 text-center" ng-if="pendingTicket !== null" ng-show-auth>
     <p class="col-xs-12 text-center spacer-1">You have an unfinished statement.</p>
     <button ng-click="go('/ticket')" class="btn btn-primary spacer-1">Finish It</button>
 </div>

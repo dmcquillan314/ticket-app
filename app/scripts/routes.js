@@ -62,7 +62,7 @@ angular.module('ticketApp')
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl',
                 resolve: {
-                    ticket: [ 'TicketService', function(TicketService) {
+                    tickets: [ 'TicketService', function(TicketService) {
 
                         return TicketService.retrieve()
                             .then(function(ticket) {
