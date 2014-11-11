@@ -7,7 +7,7 @@
  * Manages authentication to any active providers.
  */
 angular.module('ticketApp')
-    .controller('MainCtrl', [ '$scope', 'tickets', 'simpleLogin', '$location', function ($scope, tickets, simpleLogin, $location) {
+    .controller('MainCtrl', [ '$scope', 'tickets', 'simpleLogin', '$location', 'SubmittedTicketDataTransferService', function ($scope, tickets, simpleLogin, $location, SubmittedTicketDataTransferService) {
 
         $scope.logout = simpleLogin.logout;
 
@@ -17,6 +17,11 @@ angular.module('ticketApp')
 
         var pendingTickets = _.difference(tickets, $scope.submittedTickets);
         $scope.pendingTicket = pendingTickets.length > 0 ? pendingTickets[0] : null;
+
+        $scope.openSubmittedTicketsView = function() {
+            SubmittedTicketDataTransferService.submittedTickets = $scope.submittedTickets;
+            $scope.openNamedView('submitted-tickets');
+        };
 
         $scope.oauthlogin = function(provider) {
             login(provider, {

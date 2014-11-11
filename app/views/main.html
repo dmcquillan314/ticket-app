@@ -15,6 +15,10 @@
     <button ng-click="go('/ticket')" class="btn btn-primary spacer-1">Finish It</button>
 </div>
 
+<div class="col-xs-12 row center-block spacer-2" ng-show-auth ng-if="submittedTickets.length > 0">
+    <button ng-click="openSubmittedTicketsView()" class="btn btn-primary col-xs-push-3 col-xs-6 spacer-1">View Submitted Tickets</button>
+</div>
+
 <div class="col-xs-12 row center-block text-center" ng-show-auth>
     <button role="button" ng-click="logout()" class="btn btn-sm btn-default">Log Out</button>
 </div>

@@ -1,5 +1,9 @@
 angular.module('ticketApp')
 
+.controller('SubmittedTicketCtrl', [ '$scope', 'SubmittedTicketDataTransferService', function($scope, SubmittedTicketDataTransferService) {
+    $scope.submittedTickets = SubmittedTicketDataTransferService.submittedTickets;
+}])
+
 .controller('TicketCtrl', [ '$q', '$scope', '$location', 'user', 'tickets', 'profile', 'simpleLogin', 'firebaseUtil', 'authRequired', 'TicketService',
 function($q, $scope, $location, user, tickets, profile, simpleLogin, firebaseUtil, authRequired, TicketService) {
     'use strict';
@@ -201,6 +205,8 @@ function($q, $scope, $location, user, tickets, profile, simpleLogin, firebaseUti
         submitTicket().then(function() {
             if(steps[curStep] === 'summary') {
                 ticket.submitted = true;
+                ticket.timestamp = (new Date()).getTime();
+
                 delete ticket.lastSubmittedStep;
 
                 submitTicket().then(function() {

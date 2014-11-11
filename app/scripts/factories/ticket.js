@@ -15,9 +15,18 @@ angular.module('ticketApp')
                         deferred.reject(error);
                     }
                 });
+            })
+            .catch(function() {
+                deferred.resolve(null);
             });
 
             return deferred.promise;
         }
     };
+}])
+
+.service('SubmittedTicketDataTransferService', [ function() {
+    var service = this;
+
+    service.submittedTickets = null;
 }]);
