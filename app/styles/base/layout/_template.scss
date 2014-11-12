@@ -54,6 +54,54 @@ body {
     }
 }
 
+.spacer-1 {
+    margin-bottom: $global-padding !important;
+}
+
+.spacer-2 {
+    margin-bottom: $global-padding * 2 !important;
+}
+
+.spacer-3 {
+    margin-bottom: $global-padding * 3 !important;
+}
+
+.spacer-1-5 {
+    margin-bottom: $global-padding * 1.5 !important;
+}
+
+.spacer-2-5 {
+    margin-bottom: $global-padding * 2.5 !important;
+}
+
+.spacer-3-5 {
+    margin-bottom: $global-padding * 3.5 !important;
+}
+
+.spacer-top-1 {
+    margin-top: $global-padding !important;
+}
+
+.spacer-top-2 {
+    margin-top: $global-padding * 2 !important;
+}
+
+.spacer-top-3 {
+    margin-top: $global-padding * 3 !important;
+}
+
+.spacer-top-1-5 {
+    margin-top: $global-padding * 1.5 !important;
+}
+
+.spacer-top-2-5 {
+    margin-top: $global-padding * 2.5 !important;
+}
+
+.spacer-top-3-5 {
+    margin-top: $global-padding * 3.5 !important;
+}
+
 .mask.main-modal-mask {
     z-index: 2;
 }

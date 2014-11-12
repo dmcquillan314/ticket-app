@@ -105,21 +105,28 @@
 
 </div>
 
-<aside class="sidebar sidebar--left sidebar--menu slide-right" ng-if="activeView == 'sidebarLeft'" role="navigation" aria-label="menu" tabindex="-1" >
+<aside class="sidebar sidebar--left sidebar--menu slide-right" ng-show-auth ng-if="activeView == 'sidebarLeft'" role="navigation" aria-label="menu" tabindex="-1" >
     <div ng-include="'views/modal/menu.html'"></div>
+</aside>
+
+<aside class="sidebar sidebar--modal slide-up" role="navigation" tabindex="-1" ng-if="activeView == 'terms'">
+    <div ng-include="'views/modal/terms.html'"></div>
+</aside>
+
+<aside class="sidebar sidebar--modal slide-up" role="navigation" tabindex="-1" ng-if="activeView == 'submitted-tickets'">
+    <div ng-include="'views/modal/submitted-tickets.html'"></div>
 </aside>
 
 <div class="mask mask--black" ng-click="openNamedView('')" ng-if="activeView != ''"></div>
 
 <header class="header header--main">
     <nav>
-        <span class="navigation-bar left">
+        <span class="navigation-bar left" ng-show-auth>
             <button class="navigation-bar_item menu left button button--blue button-expanded" role="button" aria-label="main menu" aria-haspopup="true" ng-click="openNamedView('sidebarLeft')">Menu</button>
         </span>
     </nav>
 </header>
 
-<!-- Add your site or application content here -->
 <div class="scrollable container-fluid">
     <div class="scrollable-content" ng-view="">
     </div>

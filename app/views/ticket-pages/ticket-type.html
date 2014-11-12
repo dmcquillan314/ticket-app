@@ -1,5 +1,9 @@
-<section class="button-group button-group--vertical">
-    <button ng-click="ticket.type = 'parking'; submitTicket();" class="button">Parking</button>
-    <button class="button" disabled="true">Red Light</button>
-    <button class="button" disabled="true">Speed Trap</button>
+<section class="row spacer-2 spacer-top-2">
+    <button class="col-xs-push-4 col-xs-4 btn btn-primary" ng-click="ticket.type = 'parking'; submitTicket();" class="button">Parking</button>
+</section>
+<section class="row spacer-2">
+    <button class="col-xs-push-4 col-xs-4 btn btn-primary" disabled="true">Red Light</button>
+</section>
+<section class="row spacer-2">
+    <button class="col-xs-push-4 col-xs-4 btn btn-primary" disabled="true">Speed Trap</button>
 </section>

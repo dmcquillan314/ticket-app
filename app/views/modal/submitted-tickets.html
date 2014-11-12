@@ -1,0 +1,30 @@
+<header class="header header--modal">
+    <nav>
+    <span class="navigation-bar close-left left modal-sub-view-header-container middle">
+        <span class="modal-sub-view-header">Submitted Tickets</span>
+    </span>
+    <span class="navigation-bar right sub-view-animated-button">
+        <button class="navigation-bar_item close-button left button button--light-grey button-expanded" ng-click="openRootView()">
+            x
+        </button>
+    </span>
+    </nav>
+</header>
+<div class="scrollable" ng-controller="SubmittedTicketCtrl">
+    <div class="scrollable-content">
+        <div class="table table-condensed">
+            <table class="table">
+                <tr>
+                    <th>Ticket #</th>
+                    <th>Type</th>
+                    <th>Time Submitted</th>
+                </tr>
+                <tr ng-repeat="ticket in submittedTickets">
+                    <td>{{ ticket.number }}</td>
+                    <td>{{ ticket.type }}</td>
+                    <td>{{ ticket.timestamp | date:'MMM dd, yyyy' }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

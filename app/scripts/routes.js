@@ -60,13 +60,25 @@ angular.module('ticketApp')
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                resolve: {
+                    tickets: [ 'TicketService', function(TicketService) {
+
+                        return TicketService.retrieve()
+                            .then(function(ticket) {
+                                return ticket;
+                            })
+                            .catch(function() {
+                                return null;
+                            });
+                    }]
+                }
             })
             .whenAuthenticated('/ticket', {
                 templateUrl: 'views/ticket.html',
                 controller: 'TicketCtrl',
                 resolve: {
-                    ticket: [ 'TicketService', function(TicketService) {
+                    tickets: [ 'TicketService', function(TicketService) {
                         return TicketService.retrieve();
                     }],
                     profile: [ '$q', 'authRequired', 'firebaseUtil', function($q, authRequired, firebaseUtil) {

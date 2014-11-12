@@ -1,14 +1,22 @@
 <form role="form" name="submissionAgreement" ng-submit="submitTicket()" novalidate>
 
-    <h2>All set?</h2>
+    <h2 class="row col-xs-12">All set?</h2>
 
-    <p>We are generating your statement and it will be mailed in a matter of moments. Please take the time to review your statement. If you agree with the contents of the statement and would like us to send it to the city, please sign and send.</p>
+    <p class="row col-xs-12">We are generating your statement and it will be mailed in a matter of moments. Please take the time to review your statement. If you agree with the contents of the statement and would like us to send it to the city, please sign and send.</p>
 
-    <input name="signature" type="hidden" required ng-model="agreement.signature" />
-    <div class="signature-pad" form-controller="submissionAgreement.signature"></div>
+    <label class="form-group row col-xs-12" ng-class="getCssClasses(submissionAgreement.signature)">
+        <p class="control-label">Signature</p>
 
-    <p>
-        <button  class="btn btn-primary" ng-click="prevStep()" type="button">Prev</button>
-        <button  class="btn btn-primary" type="submit ">Next</button>
-    </p>
+        <p class="panel-collapse control-label" ng-messages="submissionAgreement.signature.$error" collapse="! showClientValidationError(submissionAgreement.signature)">
+            <span ng-message-when="required">A signature is required.</span>
+        </p>
+
+        <input name="signature" type="hidden" required ng-model="agreement.signature" />
+        <div class="signature-pad" form-controller="submissionAgreement.signature"></div>
+    </label>
+
+    <div class="row col-xs-12">
+        <button  class="btn btn-default col-xs-4" ng-click="prevStep()" type="button">Prev</button>
+        <button  class="btn btn-primary col-xs-4 col-xs-push-4" type="submit ">Next</button>
+    </div>
 </form>

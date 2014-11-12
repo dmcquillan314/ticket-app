@@ -2,7 +2,7 @@ angular.module('form', [])
 
 .config( [ '$provide', function($provide) { 'use strict';
 
-    $provide.decorator('ngSubmitDirective', [ '$delegate', '$parse', 'AlertService', function($delegate, $parse, AlertService) {
+    $provide.decorator('ngSubmitDirective', [ '$delegate', '$parse', 'AlertService', function($delegate, $parse, AlertService) { 'use strickt';
 
 
         var directive = $delegate[0];
@@ -292,7 +292,7 @@ angular.module('form', [])
     };
 }])
 
-.directive('match', [ function() {
+.directive('match', [ function() { 'use strict';
     return {
         require: 'ngModel',
         restrict: 'A',
