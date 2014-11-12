@@ -26,5 +26,6 @@ angular
         'signature',
         'alert',
         'form',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'google-maps'.ns()
     ]);

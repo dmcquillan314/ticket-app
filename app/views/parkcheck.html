@@ -1,0 +1,24 @@
+<div>
+    <div class="error" ng-hide="supportsLocation">
+        Sorry, you must allow location services for this application to use
+        this feature.
+    </div>
+    <div id="map" ng-show="supportsLocation">
+        <h2>Park Check</h2>
+        <ui-gmap-google-map center="map.center" zoom='map.zoom'>
+            <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+            </ui-gmap-marker> 
+        </ui-gmap-google-map>
+    </div> 
+    <div ng-show="supportsLocation" class="warnings-list-section" style="padding-top:20px">
+        <h4>Street Sweeping</h4>
+        <ul class="warning-list">
+            <li ng-repeat="date in streetCleaningDates">{{date.name}} - {{date.days}}</li>
+        </ul>
+        <h4>Winter Overnight Parking Restrictions</h4>
+        <ul>
+            You are potentially in an area that restricts parking from 3AM-7AM
+            from Dec 1 to April 1. Check street signs.
+        </ul>
+    </div>
+</div>

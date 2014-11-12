@@ -88,6 +88,10 @@ angular.module('ticketApp')
                     }]
                 }
             })
+            .when('/warnings', {
+                templateUrl: 'views/parkcheck.html',
+                controller: 'ParkCheckCtrl'
+            })
             .otherwise({redirectTo: '/'});
     }])
 
