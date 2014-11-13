@@ -25,7 +25,7 @@ angular.module('ticketApp')
     };
 }])
 
-.service('SubmittedTicketDataTransferService', [ function() {
+.service('SubmittedTicketDataTransferService', [ function() { 'use strict';
     var service = this;
 
     service.submittedTickets = null;

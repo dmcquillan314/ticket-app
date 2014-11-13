@@ -1,6 +1,6 @@
 angular.module('ticketApp')
 
-.controller('SubmittedTicketCtrl', [ '$scope', 'SubmittedTicketDataTransferService', function($scope, SubmittedTicketDataTransferService) {
+.controller('SubmittedTicketCtrl', [ '$scope', 'SubmittedTicketDataTransferService', function($scope, SubmittedTicketDataTransferService) { 'use strict';
     $scope.submittedTickets = SubmittedTicketDataTransferService.submittedTickets;
 }])
 
